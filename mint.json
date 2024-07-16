@@ -1,5 +1,4 @@
 {
-  "$schema": "https://mintlify.com/schema.json",
   "name": "Swiftchats",
   "logo": {
     "dark": "http://swiftchats.test/documentation/images/logo.png",
