@@ -1,8 +1,8 @@
 {
   "name": "Swiftchats",
   "logo": {
-    "dark": "http://swiftchats.test/documentation/images/logo.png",
-    "light": "http://swiftchats.test/documentation/images/logo.png"
+    "dark": "/images/logo.png",
+    "light": "/images/logo.png"
   },
   "favicon": "/images/thumbnail.png",
   "colors": {
