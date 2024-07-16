@@ -1,0 +1,36 @@
+---
+title: "Social Logins"
+sidebarTitle: "Social Logins"
+description: ""
+---
+
+In the Social Logins section, you can configure social media integrations to enable seamless signup/login functionality. 
+
+### Facebook
+<Info>
+    Create separate apps for Facebook Login and Facebook Login for business if you are using Embedded Signup.
+</Info>
+
+1. Go to the <a href="https://developers.facebook.com/">Facebook for Developers website</a> and sign in with your Facebook account and click My Apps from the menu.
+2. Then click to "Create App" button as here.
+3. Then select `consumer` in the next page.
+4. In the next page provide the basic info of your app.
+5. After the app has been created, you will get the app id and secret. Then you need to add this details to .env file.
+6. If you want to upload on production then you need to specify domain as well. But, if you are checking with local then you don't need to add these urls.
+
+That's it! You now have your Facebook Client ID and Secret, which you can use to integrate Facebook into your application. Make sure to keep your keys and secrets safe and secure to protect your users' data.
+
+### Google
+1. Go to <a href="https://console.cloud.google.com/apis/dashboard" target="_blank">Google Cloud Console</a> and create a new project.
+2. Then click the `CREATE PROJECT` to continue, input your project name and organization (you can set it as No organization) then click `CREATE`.
+<Info>
+    NOTE: If you have a project already you can skip the above steps. And just select your current project name created previously.
+</Info>
+3. After creating the project, click the credentials link on the left side menu. Then click `+ CREATE CREDENTIALS` button. From the dropdown select `OAuth client ID`.
+4. In the next screen click `CONFIGURE CONSENT SCREEN`.
+5. In the next screen click, select User Type as External
+6. If your account is new you need to finish the OAuth consent screen and provide the important details they ask for.
+7. Once the consent is finished, go back to the Credentials page by clicking Credentials on the left menu. Then click `+ CREATE CREDENTIALS` button & from the dropdown select OAuth client ID (Like step 3 above)
+
+
+That's it! You now have your `Google Client ID` and `Secret`, which you can use to integrate Google into your application. Make sure to keep your keys and secrets safe and secure to protect your users' data.

@@ -1,11 +1,11 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "Starter Kit",
+  "name": "Swiftchats",
   "logo": {
-    "dark": "/logo/dark.svg",
-    "light": "/logo/light.svg"
+    "dark": "http://swiftchats.test/documentation/images/logo.png",
+    "light": "http://swiftchats.test/documentation/images/logo.png"
   },
-  "favicon": "/favicon.svg",
+  "favicon": "/images/thumbnail.png",
   "colors": {
     "primary": "#0D9373",
     "light": "#07C983",
@@ -18,12 +18,12 @@
   "topbarLinks": [
     {
       "name": "Support",
-      "url": "mailto:hi@mintlify.com"
+      "url": "mailto:support@axis96.xyz"
     }
   ],
   "topbarCtaButton": {
-    "name": "Dashboard",
-    "url": "https://dashboard.mintlify.com"
+    "name": "Support Desk",
+    "url": "https://support.axis96.xyz/login"
   },
   "tabs": [
     {
@@ -31,41 +31,79 @@
       "url": "api-reference"
     }
   ],
-  "anchors": [
-    {
-      "name": "Documentation",
-      "icon": "book-open-cover",
-      "url": "https://mintlify.com/docs"
-    },
-    {
-      "name": "Community",
-      "icon": "slack",
-      "url": "https://mintlify.com/community"
-    },
-    {
-      "name": "Blog",
-      "icon": "newspaper",
-      "url": "https://mintlify.com/blog"
-    }
-  ],
+  "anchors": [],
   "navigation": [
     {
       "group": "Get Started",
       "pages": [
         "introduction",
-        "quickstart",
-        "development"
+        "get-started/prerequisites",
+        "get-started/installation",
+        "get-started/update"
       ]
     },
     {
-      "group": "Essentials",
+      "group": "Admin Panel",
       "pages": [
-        "essentials/markdown",
-        "essentials/code",
-        "essentials/images",
-        "essentials/settings",
-        "essentials/navigation",
-        "essentials/reusable-snippets"
+        {
+          "group": "Settings",
+          "pages": [
+            "setup/general",
+            "setup/timezone",
+            "setup/broadcast",
+            "setup/social",
+            "setup/storage",
+            "setup/payments",
+            "setup/smtp",
+            "setup/templates",
+            "setup/frontend",
+            "setup/subscription",
+            "setup/billing",
+            "setup/taxrates",
+            "setup/coupons",
+            "setup/languages"
+          ]
+        },
+        {
+          "group": "Addons",
+          "pages": [
+            "addons/embedded-signup",
+            "addons/google-recaptcha",
+            "addons/google-analytics",
+            "addons/google-maps",
+            "addons/razorpay"
+          ]
+        },
+        "admin/subscription-plans",
+        "admin/faqs",
+        "admin/reviews",
+        "admin/team",
+        "admin/roles",
+        "admin/organizations",
+        "admin/users",
+        "admin/billing"
+      ]
+    },
+    {
+      "group": "Customer Panel",
+      "pages": [
+        {
+          "group": "Settings",
+          "pages": [
+            "customer/settings/general",
+            "customer/settings/whatsapp",
+            "customer/settings/contact-fields",
+            "customer/settings/ticketing"
+          ]
+        },
+        "customer/chat",
+        "customer/contacts",
+        "customer/contact-groups",
+        "customer/campaigns",
+        "customer/templates",
+        "customer/automation",
+        "customer/billing",
+        "customer/team"
       ]
     },
     {
@@ -75,11 +113,38 @@
       ]
     },
     {
-      "group": "Endpoint Examples",
+      "group": "Contacts",
       "pages": [
-        "api-reference/endpoint/get",
-        "api-reference/endpoint/create",
-        "api-reference/endpoint/delete"
+        "api-reference/endpoint/contacts/get",
+        "api-reference/endpoint/contacts/create",
+        "api-reference/endpoint/contacts/edit",
+        "api-reference/endpoint/contacts/delete"
+      ]
+    },
+    {
+      "group": "Contact Groups",
+      "pages": [
+        "api-reference/endpoint/contact-groups/get",
+        "api-reference/endpoint/contact-groups/create",
+        "api-reference/endpoint/contact-groups/edit",
+        "api-reference/endpoint/contact-groups/delete"
+      ]
+    },
+    {
+      "group": "Automated Replies",
+      "pages": [
+        "api-reference/endpoint/automated-replies/get",
+        "api-reference/endpoint/automated-replies/create",
+        "api-reference/endpoint/automated-replies/edit",
+        "api-reference/endpoint/automated-replies/delete"
+      ]
+    },
+    {
+      "group": "Messages",
+      "pages": [
+        "api-reference/endpoint/messages/text",
+        "api-reference/endpoint/messages/media",
+        "api-reference/endpoint/messages/template"
       ]
     }
   ],

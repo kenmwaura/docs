@@ -1,0 +1,48 @@
+---
+title: "SMTP Settings"
+sidebarTitle: "SMTP Settings"
+description: ""
+---
+
+Mail settings are crucial for configuring how your application sends emails. This includes setting up SMTP, mail drivers, sender email addresses, and other email-related configurations to ensure proper communication with users.
+
+### Cpanel Hosting Setup
+> Create an email in your hosting and note down the credentials. <br/>
+> Click "Connect Device" to access required info. <br/>
+> Copy this info into the relevant fields in Swiftchats mailer settings.
+
+### Resend Setup
+> Create an account <a href="https://resend.com/">here</a>. <br/>
+> Go through this <a href="https://resend.com/docs/send-with-laravel-smtp">documentation</a> on how to get your credentials
+
+
+### SendGrid Setup
+> Create your sendgrid account <a href="https://sendgrid.com/">here</a>. <br/>
+> Follow this documentation on how to setup and get the SMTP credentials from SendGrid. <br/>
+> You also need to authenticate your domain in order to send emails as documented <a href="https://sendgrid.com/docs/ui/account-and-settings/how-to-set-up-domain-authentication/">here</a>
+
+
+### Mailgun Setup
+> Create your mailgun account <a href="https://signup.mailgun.com/new/signup">here</a><br/>
+> Go through this <a href="https://documentation.mailgun.com/docs/mailgun/quickstart-guide/quickstart/">documentation</a> on how to get your maigun domain and secret key.
+
+### FAQs
+The Mail Settings FAQ section provides detailed answers to common questions related to configuring and managing email settings within Swiftchats.
+
+<AccordionGroup>
+    <Accordion title="How do I configure SMTP settings?">
+        We have given instructions above on how to connect popular email hosting platforms. If you're trying to integrate a different platform and are facing issues, please contact support
+    </Accordion>
+
+    <Accordion title="What should I do if emails are not being delivered?">
+        Check if your email settings are correct i.e. username and password. If okay, you can go to your logs i.e. `storage/logs/laravel.log` to check the specific error that you are experiencing
+    </Accordion>
+
+    <Accordion title="How can I test my email configuration?">
+        Click on the test email button
+    </Accordion>
+
+    <Accordion title="How do I troubleshoot common email sending issues?">
+        Go to your logs i.e. `storage/logs/laravel.log` to check the specific error that you are experiencing
+    </Accordion>
+</AccordionGroup>

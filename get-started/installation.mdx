@@ -1,0 +1,42 @@
+---
+title: "Installation Guide"
+sidebarTitle: "Installation Guide"
+description: ""
+---
+
+<Info>
+    Before beginning the installation make sure that your system requirements as indicated have been met.
+</Info>
+After purchasing Swiftchats, you will get a zipped folder. After unzipping the folder, you will get three folders, the source code folder, update folder and the documentation folder.
+
+> Documentation <br />
+> Source-code <br />
+> Update
+
+#### Database setup
+1. Create a new MySQL database.
+2. Create a new MySQL username and password.
+3. Assign full privileges to your database username.
+
+<Tip>
+    cPanel - MySQL database wizard <br />
+    Plesk - Website databases
+</Tip>
+
+#### Uploading code
+<Info>
+    Before starting to upload the files, please make sure your file explorer has the option to view hidden files turned on. On some operating systems, the dotfiles are hidden by default.
+</Info>
+- Upload the source-code folder to your server public_html or domain root directory where Swiftchats will be installed.
+- Create a new MySQL database and DB user from your server and assign that user to the database
+
+#### Installer setup
+Once you have configured the steps above, go to your domain or subdomain which should redirect you to the installation page. Go through each installation step and grant folder permissions where necessary.
+
+#### Trouble-shooting your installation
+If you are facing issues with the installer, you can try the steps below
+
+- Grant access to your .env file by running the following code in the terminal. <br/>
+`chown -R www-data:www-data .env`
+- Go to storage folder and delete installed file
+- Retry installing the script again

@@ -1,0 +1,69 @@
+---
+title: "Embedded Signup"
+sidebarTitle: "Embedded Signup"
+description: ""
+---
+
+<Info>
+    Embedded Signup is only available to `exclusive licenses`. You also need to get verified as a `Tech provider or partner` by Meta
+</Info>
+
+## 1. How to setup Embedded signup
+<iframe height="315" width="100%" src="https://www.youtube.com/embed/Lkh4w6Hh3lY?si=1-7zKsw47tOdNJQ6"> </iframe>
+
+<Warning>
+    The tutorial describes using a temporary access token which lasts for only 24 hours and has to be renewed. In order to avoid this hassle, you should setup a
+    permanent access token instead as described here.
+</Warning>
+
+## 2. End To End business onboarding
+- Create business portfolio and WhatsApp Business Account via Embedded Signup
+- Your users will use the Embedded Signup flow on your website to login with Facebook and create a portfolio and WhatsApp Business Account
+ 
+### Embedded Signup Process
+- Your users will accept WhatsApp and Meta Terms of Service
+- They will create a new business portfolio or select an existing portfolio
+- For existing portfolios, they will have to create a new WhatsApp Business Account and for new portfolios, a WhatsApp Business Account with the same name will be created
+- Users will then create a WhatsApp Business Profile with a phone number
+- Next they will have to verify the number with an OTP code
+- Make sure your users use a number that is not registered on WhatsApp already
+
+### Success View for user
+- Once the user finishes the flow, they can navigate to `Settings > whatsapp` to see their Whatsapp account settings.
+
+### Business Verification
+- Your user's business will also have to go through the verification process so we recommend you guide them through it
+
+### Payment Setup
+- Your users must pay Meta directly, so they must add a payment method to their WhatsApp Business Account. To do this, instruct them to go to the Business Settings panel in the Meta Business Suite, select their WABA, and click the Settings tab. There they can add a payment method.
+Business Settings URL: https://business.facebook.com/settings/whatsapp-business-accounts/
+
+## 3. FAQs
+<AccordionGroup>
+    <Accordion title="What are the requirements to be a Tech provider?">
+        You need to pass Access Verification (This is different from business verification).
+    </Accordion>
+
+    <Accordion title="Embedded Signup is successful but nothing happens when a user clicks finish?">
+        1. First, check if your access token is valid by using this link https://developers.facebook.com/tools/debug/accesstoken/
+        2. Check if the access token has the following permissions on the same link i.e. `whatsapp_business_management`, `whatsapp_business_messaging`
+        3. Confirm if you have setup webhooks as indicated in the tutorial
+        4. You can only test Embedded Signup with a WhatsApp Business profile associated with the developer account. External profiles will not connect until all permissions are granted through Access verification.
+    </Accordion>
+
+    <Accordion title="What happens if my customers change providers and have already used messages?">
+        When changing providers, any messages sent and received through the previous provider will not transfer to the new provider. You will need to configure your new provider's settings and API keys. It’s important to note that message history and settings associated with the previous provider will be lost, and any remaining message quotas with the old provider will not carry over to the new one.
+    </Accordion>
+
+    <Accordion title="Can my customers reuse the same number with a different WhatsApp Cloud API provider?">
+        Yes, they can reuse the same number with a different WhatsApp Cloud API provider. However, after disconnecting the number from the current provider, you must wait for the 24-hour cooldown period before you can link it to the new provider. Ensure that you have properly configured the new provider's settings and obtained the necessary API credentials.
+    </Accordion>
+
+    <Accordion title="What should I do if my customer's number is still not reconnecting after 24 hours?">
+        If your number is not reconnecting after the 24-hour waiting period:
+
+        - Double-check that it was properly disconnected from the previous provider.
+        - Ensure there are no pending verification issues with WhatsApp.
+        - Contact WhatsApp support for assistance if the problem persists.
+    </Accordion>
+</AccordionGroup>

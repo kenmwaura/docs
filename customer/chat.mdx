@@ -1,0 +1,27 @@
+---
+title: "Chat"
+sidebarTitle: "Chat"
+description: ""
+---
+
+<Warning>
+    Prerequisites: You need to <a href="/customer/settings/whatsapp">connect your whatsapp account</a> first before you can send or receive messages.
+    You also need to <a href="/setup/broadcast">setup Pusher</a> for realtime messaging.
+</Warning>
+
+The chat module allows users to send and receive messages. It also allows your agents to use tickets.
+
+Supported message types: `text`, `image`, `audio`, `video` and `maps`
+
+#### FAQs
+<AccordionGroup>
+    <Accordion title="I can't receive messages in realtime?">
+        Make sure that your customer has setup webhooks, if they have connected manually to their whatsapp account.
+        If using embedded signup, ensure that you have setup webhooks correctly as stated in the documentation.
+    </Accordion>
+
+    <Accordion title="I can't see ticketing?">
+        You need to activate ticketing in `Settings > General`
+    </Accordion>
+</AccordionGroup>
+
