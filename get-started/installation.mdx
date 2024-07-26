@@ -13,7 +13,7 @@ After purchasing Swiftchats, you will get a zipped folder. After unzipping the f
 > Source-code <br />
 > Update
 
-#### Database setup
+## Database setup
 1. Create a new MySQL database.
 2. Create a new MySQL username and password.
 3. Assign full privileges to your database username.
@@ -23,17 +23,52 @@ After purchasing Swiftchats, you will get a zipped folder. After unzipping the f
     Plesk - <a href="https://docs.plesk.com/en-US/obsidian/customer-guide/website-databases.69535/" target="_blank">Website databases</a>
 </Tip>
 
-#### Uploading code
+## Uploading code
 <Info>
     Before starting to upload the files, please make sure your file explorer has the option to view hidden files turned on. On some operating systems, the dotfiles are hidden by default.
 </Info>
 - Upload the source-code folder to your server public_html or domain root directory where Swiftchats will be installed.
 - Create a new MySQL database and DB user from your server and assign that user to the database
 
-#### Installer setup
+## Installer setup
 Once you have configured the steps above, go to your domain or subdomain which should redirect you to the installation page. Go through each installation step and grant folder permissions where necessary.
 
-#### Trouble-shooting your installation
+## Cron jobs setup
+To ensure WhatsApp campaigns are successfully delivered, it's vital to establish a cron job that runs at intervals to dispatch these campaigns.
+There are several ways to run the cron job. For the purposes of this documentation, we'll highlight adding a cron job in cpanel, linux/VPS server and cronjob.org
+
+### Cpanel
+1. Access your cPanel account using your credentials.
+2. Look for the `Cron Jobs` or `Cron Tasks` icon within the cPanel dashboard. It's usually found under the `Advanced` or `Metrics` section.
+3. Click on the `Cron Jobs` icon to proceed.
+4. Under the `Add New Cron Job` section, you'll see fields to specify the timing and command for the cron job.
+5. Set Timing: We suggest to run the cron job every 3-5 minutes.
+6. In the command field, enter the appropriate command to fetch the URL. For example:<br/>
+`wget -O /dev/null https://yoururl.com/campaign-send`<br/>
+`curl -sS https://yoururl.com/campaign-send >/dev/null 2>&1`
+7. Save Cron Job
+
+### Linux/VPS
+1. Open your crontab for editing. You can do this by running the following command in your terminal: `crontab -e`
+2. Add the following line to your crontab to execute the URL every 3 minutes: <br/>
+    `*/3 * * * * /usr/bin/curl -sS "https://yoururl.com/campaign-send"`
+
+    <Info>
+    Here's a breakdown of the cron schedule:<br/>
+    - `*/3` means `every 3 minutes.`<br/>
+    - `*` in the other fields means "every hour," "every day," "every month," and "every day of the week."
+    </Info>
+
+    
+3. Save and exit your crontab editor.
+
+### Cronjob.org
+1. Create an account on https://console.cron-job.org/
+2. Click on create cronjob on the dashboard
+3. Enter the URL of the cron job i.e. https://yoururl.com/campaign-send and set execution schedule between 3 - 5 minutes.
+4. Click create to save the cronjob
+
+## Trouble-shooting your installation
 If you are facing issues with the installer, you can try the steps below
 
 - Grant access to your .env file by running the following code in the terminal. <br/>

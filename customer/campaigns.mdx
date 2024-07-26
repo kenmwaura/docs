@@ -5,8 +5,10 @@ description: ""
 ---
 
 <Warning>
-    Before you can proceed, ensure that you have: <a href="/customer/settings/whatsapp">connected your whatsapp account</a>
-    and <a href="/customer/settings/general">setup your timezone</a> in `Settings > General`
+    Before you can proceed, ensure that you have: 
+    1. <a href="/customer/settings/whatsapp">Connected your whatsapp account</a>
+    2. <a href="/customer/settings/general">Setup your timezone</a> in `Settings > General`
+    3. <a href="/get-started/installation#cron-jobs-setup">Setup cron jobs</a> for campaign scheduling
 </Warning>
 
 The campaigns module allows users to create and manage messaging campaigns efficiently. Within this module, users can customize message templates by adding static or dynamic variables. This feature enhances campaign personalization and ensures that messages are tailored to individual recipients, improving engagement and communication effectiveness.
@@ -25,6 +27,9 @@ The campaigns module allows users to create and manage messaging campaigns effic
         - Confirm whether you have set up your timezone correctly.
         - Check if your whatsapp settings are okay
         - Check if your Meta business account has been locked
+    </Accordion>
+    <Accordion title="Messages are being sent more than once in a single campaign?">
+        If your campaign messages are being sent more than once in a single campaign, ensure that you have setup your cron-job to 3-5 minutes.
     </Accordion>
 </AccordionGroup>
 
