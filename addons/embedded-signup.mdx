@@ -9,12 +9,37 @@ description: ""
 </Info>
 
 ## 1. How to setup Embedded signup
+<Warning>
+    The tutorial describes using a temporary access token. We recommend <a href="/addons/embedded-signup#creating-a-permanent-token">adding a permanent access token</a> instead to avoid issues with sending and receiving messages.
+</Warning>
+
 <iframe height="315" width="100%" src="https://www.youtube.com/embed/Lkh4w6Hh3lY?si=1-7zKsw47tOdNJQ6"> </iframe>
 
-<Warning>
-    The tutorial describes using a temporary access token which lasts for only 24 hours and has to be renewed. In order to avoid this hassle, you should setup a
-    permanent access token.
-</Warning>
+### Creating a permanent Token
+To obtain a permanent access token that doesn't expire after 23 hours, follow these steps:
+
+1. Navigate to the Business settings of the Business your app is registered with on the Meta/Facebook Developer Dashboard. Click on the Business name, which appears as a blue link.
+<img src="/images/img01.png" style={{ borderRadius: '0.5rem' }} />
+
+2. Then in the Sidebar navigate to Users > System Users Click “Add” 
+<img src="/images/img02.png" style={{ borderRadius: '0.5rem' }} />
+
+3. Add a “System Username” and choose a role. 
+<img src="/images/img03.png" style={{ borderRadius: '0.5rem' }} />
+
+4. Click “Add Assets” 
+<img src="/images/img04.png" style={{ borderRadius: '0.5rem' }} />
+
+5. Go to “Apps”, select the app and enable the “Manage App” option and save changes. 
+<img src="/images/img05.png" style={{ borderRadius: '0.5rem' }} />
+
+6. Click “Generate Token” and choose the App you want to generate a token for. 
+<img src="/images/img06.png" style={{ borderRadius: '0.5rem' }} />
+
+7. From available permissions choose “whatsapp_business_messaging” and “whatsapp_business_management” and click “Generate token”. 
+<img src="/images/img07.png" style={{ borderRadius: '0.5rem' }} />
+
+Use the generated “Access token” instead of the “Temporary token” that was provided before. 
 
 ## 2. End To End business onboarding
 - Create business portfolio and WhatsApp Business Account via Embedded Signup
