@@ -71,7 +71,8 @@
             "addons/google-recaptcha",
             "addons/google-analytics",
             "addons/google-maps",
-            "addons/razorpay"
+            "addons/razorpay",
+            "addons/ai-assistant"
           ]
         },
         "admin/subscription-plans",
