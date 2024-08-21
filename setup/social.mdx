@@ -21,6 +21,7 @@ In the Social Logins section, you can configure social media integrations to ena
 That's it! You now have your Facebook Client ID and Secret, which you can use to integrate Facebook into your application. Make sure to keep your keys and secrets safe and secure to protect your users' data.
 
 ### Google
+<iframe height="315" width="100%" src="https://www.youtube.com/embed/FldekhLEya0?si=hkl_2UKu_-XIrPkD"> </iframe>
 1. Go to <a href="https://console.cloud.google.com/apis/dashboard" target="_blank">Google Cloud Console</a> and create a new project.
 2. Then click the `CREATE PROJECT` to continue, input your project name and organization (you can set it as No organization) then click `CREATE`.
 <Info>
@@ -31,6 +32,10 @@ That's it! You now have your Facebook Client ID and Secret, which you can use to
 5. In the next screen click, select User Type as External
 6. If your account is new you need to finish the OAuth consent screen and provide the important details they ask for.
 7. Once the consent is finished, go back to the Credentials page by clicking Credentials on the left menu. Then click `+ CREATE CREDENTIALS` button & from the dropdown select OAuth client ID (Like step 3 above)
+8. Add the following details:
+    - Authorized Javascript origins URI - https://yourdomain.com
+    - Authorized redirect URIs - https://yourdomain.com/google/callback
+9. Click save and then copy the client ID and secret to your app.
 
 
 That's it! You now have your `Google Client ID` and `Secret`, which you can use to integrate Google into your application. Make sure to keep your keys and secrets safe and secure to protect your users' data.
