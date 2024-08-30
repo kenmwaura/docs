@@ -20,6 +20,18 @@ Supported message types: `text`, `image`, `audio`, `video` and `maps`
         If using embedded signup, ensure that you have setup webhooks correctly as indicated <a href="/customer/settings/whatsapp#how-to-connect-manually">in this tutorial video</a>.
     </Accordion>
 
+    <Accordion title="Why can't I send messages using my WhatsApp test number?">
+        If you're using a test WhatsApp number provided by Meta, you'll need to whitelist the phone numbers you want to send messages to. To do this, follow these steps:
+
+        - Log in to the Meta for Developers portal and go to your app.
+        - Navigate to `WhatsApp > API Setup`.
+        - Under `Send and receive messages`, select the `To` field and choose `Manage phone number list`.
+        - You can add any valid WhatsApp number as a recipient. The recipient number will receive a confirmation code in WhatsApp that can be used to verify the number.
+        - Once you verify the recipient number, it should now be selected in the To field. Repeat this process if you’d like to add another recipient, up to 5 in total.
+
+        Remember, messages can only be sent to the whitelisted numbers until you switch to a production number.
+    </Accordion>
+
     <Accordion title="I can't see ticketing?">
         You need to activate ticketing in `Settings > General`
     </Accordion>
