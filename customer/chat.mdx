@@ -17,11 +17,19 @@ Supported message types: `text`, `image`, `audio`, `video` and `maps`
 <AccordionGroup>
     <Accordion title="I can't receive messages in realtime?">
         Make sure that your customer has setup webhooks, if they have connected manually to their whatsapp account.
-        If using embedded signup, ensure that you have setup webhooks correctly as stated in the documentation.
+        If using embedded signup, ensure that you have setup webhooks correctly as indicated <a href="/customer/settings/whatsapp#how-to-connect-manually">in this tutorial video</a>.
     </Accordion>
 
     <Accordion title="I can't see ticketing?">
         You need to activate ticketing in `Settings > General`
+    </Accordion>
+
+    <Accordion title="I can receive messages but campaign messages show up as failed?">
+        Ensure that you have added a valid payment method to your Meta app.
+    </Accordion>
+
+    <Accordion title="Chat page displays error 500?">
+        Please review the logs in `storage/logs/laravel.log` to identify the error. It’s possible that the script wasn’t installed correctly. If the problem continues, feel free to <a href="https://support.axis96.com/login" target="_blank">contact support</a> for assistance.
     </Accordion>
 </AccordionGroup>
 
