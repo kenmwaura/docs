@@ -69,6 +69,10 @@ Business Settings URL: https://business.facebook.com/settings/whatsapp-business-
         You need to pass Access Verification (This is different from business verification).
     </Accordion>
 
+     <Accordion title="My customers are getting `Feature unavailable` error when using embedded signup">
+        In the facebook developers console for your app, go to App Review-> Permissions and Features. Set the public_profile and email to have advanced access. This will allow all facebook users to have access and these two settings are auto granted. Ensure the Access Level indicates Advanced Access.
+    </Accordion>
+
     <Accordion title="Embedded Signup is successful but nothing happens when a user clicks finish?">
         1. First, check if your access token is valid by using this link https://developers.facebook.com/tools/debug/accesstoken/
         2. Check if the access token has the following permissions on the same link i.e. `whatsapp_business_management`, `whatsapp_business_messaging`
