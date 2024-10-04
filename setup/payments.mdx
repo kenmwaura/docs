@@ -11,7 +11,49 @@ The Payment Gateways section enables administrators to set up and manage various
 
 ### PayPal Setup
 Check out this tutorial on how to setup PayPal
-<iframe height="315" width="100%" src="https://www.youtube.com/embed/Sn452ZH4gRM"> </iframe>
+Step 1: Create a PayPal Developer Account
+
+Sign up for a developer account:
+Go to the PayPal Developer Portal.
+If you don’t have a PayPal account, click on Sign Up and create an account. If you already have one, just Log In.
+
+Step 2: Create a New App (for Client ID and Secret)
+
+Once logged in, on the Developer Dashboard, click on the Dashboard link in the top-right corner.
+Under My Apps & Credentials, go to the REST API Apps section.
+Click on the Create App button.
+In the next step, you'll be prompted to:
+Name your app (for example, "My PayPal App").
+Select either Sandbox or Live mode, depending on whether you're testing or launching in production.
+Click Create App.
+
+Step 3: Obtain Client ID and Secret
+
+After creating your app, you’ll be taken to the App Details page.
+Client ID and Secret are displayed here:
+Client ID: This is used to identify your PayPal integration.
+Client Secret: This is used along with the Client ID to authenticate API requests.
+Both are displayed under the Sandbox and Live environments. Choose the appropriate environment based on your needs.
+
+Sandbox is used for testing.
+Live is used for production after your app is ready to go live.
+Copy your Client ID and Secret for future use in your application's configuration.
+
+Step 4: Create a Webhook
+
+To receive notifications (like payment events) from PayPal, you need to set up a Webhook.
+
+On the same App Details page where you obtained the Client ID and Secret, scroll down to the Webhook section.
+Click on Add Webhook.
+In the URL field, enter the URL of your webhook endpoint. This should be an endpoint in your application where PayPal will send event notifications (e.g., https://yourapp.com/paypal/webhook).
+Under Event types, select the events you want PayPal to notify you about (e.g., PAYMENT.SALE.COMPLETED for successful payments, PAYMENT.SALE.REFUNDED, etc.).
+Click Save.
+
+Step 5: Testing (Optional)
+
+Use Sandbox mode for testing purposes:
+You can use the Sandbox Client ID and Secret to test your integration without real money.
+PayPal provides Sandbox test accounts to simulate real payments. You can create buyer and seller test accounts in the Sandbox > Accounts section of the Developer Dashboard.
 
 ### Stripe Setup
 Check out this tutorial on how to setup Stripe
