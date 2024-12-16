@@ -22,6 +22,15 @@ The campaigns module allows users to create and manage messaging campaigns effic
 
 #### FAQs
 <AccordionGroup>
+    <Accordion title="Campaign status stays at scheduled?">
+        Ensure that you have setup cron jobs as indicated <a href="/get-started/installation#cron-jobs-setup">in here</a>
+    </Accordion>
+    <Accordion title="All campaign message status is failed">
+        Failed campaign message status can be due to several factors, such as:
+        - No payment method added to Meta: <a href="https://business.facebook.com/settings/whatsapp-business-accounts/">Click here</a> to check out how to add a payment method to Meta.
+        - Locked Meta business account: Confirm that your account has not been locked.
+        - Blocked number: Recipient has blocked your number.
+    </Accordion>
     <Accordion title="Campaign messages are not being sent?">
         If your campaign messages are not being sent check the following:
         - Confirm whether you have set up your timezone correctly.
