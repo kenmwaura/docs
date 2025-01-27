@@ -13,10 +13,20 @@ In the Social Logins section, you can configure social media integrations to ena
 
 1. Go to the <a href="https://developers.facebook.com/">Facebook for Developers website</a> and sign in with your Facebook account and click My Apps from the menu.
 2. Then click to "Create App" button as here.
-3. Then select `consumer` in the next page.
-4. In the next page provide the basic info of your app.
-5. After the app has been created, you will get the app id and secret. Then you need to add this details to .env file.
-6. If you want to upload on production then you need to specify domain as well. But, if you are checking with local then you don't need to add these urls.
+3. Give your app a name
+4. On the next page, select `Authenticate and request data from users with Facebook Login`.
+5. Select your business (if applicable).
+- Kindly note that business verification is required for production.
+- You will also be required to go through app review in order for your app to get `public_profile` permission.
+6. From the app page, click `Settings` and then `Basic`. Get the `App ID` and `App Secret` from here. 
+7. From the same page, you need to ensure that you add the following information as well:
+- App icon
+- Privacy policy URL
+- User data deletion policy url &
+- Category
+8. Add your callback URL i.e. https://yourdomain.com/facebook/callback to 'Valid OAuth redirect URIs'
+
+Please note, once your app is verified, you will now be able to use the app on production.
 
 That's it! You now have your Facebook Client ID and Secret, which you can use to integrate Facebook into your application. Make sure to keep your keys and secrets safe and secure to protect your users' data.
 
