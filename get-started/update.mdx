@@ -5,9 +5,10 @@ description: ""
 ---
 
 <Warning>
-    ### Important Info For Updating to v2.4
+    ### Important Info For Updates
     - Ensure that you are using php v8.2
     - Ensure that you have enabled `imagick` extension in your server (If not you might experience error 500). 
+    - If you're performing a manual update by replacing files, make sure you're upgrading from the immediately preceding version. If you've skipped previous updates, you must use the automated update instead.
 </Warning>
 
 <Info>
@@ -16,9 +17,14 @@ description: ""
     - Any changes made to Swiftchats files will be overwritten during an update. It's recommended to use additional files for custom modifications.
 </Info>
 
+## Manual Update Process
 1 Upload the contents of the `update` folder to your server public_html or domain root directory where Swiftchats has been installed. <br/>
 2 Go to your domain or subdomain which should redirect you to the update page. <br/>
 3 Follow the instructions to update
+
+## Automatic Update Process
+1. Go to settings in the admin panel, in bottom right of settings menu click update. 
+2. Check for update and then apply the updates.
 
 If the update takes more than 3 minutes to complete, do the following:
 
