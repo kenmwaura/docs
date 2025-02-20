@@ -39,7 +39,8 @@
         "get-started/prerequisites",
         "get-started/installation",
         "get-started/update",
-        "get-started/changelog"
+        "get-started/changelog",
+        "get-started/common-issues"
       ]
     },
     {
