@@ -1,0 +1,119 @@
+---
+title: "Webhooks"
+sidebarTitle: "Webhooks"
+description: ""
+---
+
+### Webhook Integration Guide
+
+#### Overview 
+Webhooks allow your application to receive real-time updates when specific events occur within our system. By providing a webhook URL and subscribing to events, your server will receive HTTP POST requests containing relevant event data.
+
+##### Importance of Webhooks & Integrations
+
+Webhooks are crucial for automating workflows and integrating different applications in real time. Here are some ways they can be used:
+
+- Automated Notifications: Receive instant alerts when a message is received, sent, or updated.
+- CRM Integration: Sync contacts, messages, and groups with customer relationship management (CRM) systems.
+- Data Logging & Analytics: Store and analyze event data for insights and reporting.
+- Third-Party Services: Connect with external applications such as Slack, Zapier, or custom APIs to enhance functionality.
+
+By leveraging webhooks, businesses can streamline operations, improve efficiency, and create seamless cross-application workflows.
+
+
+#### Setting Up a Webhook
+To set up a webhook, follow these steps:
+
+1. Enable the Webhooks module by <a href="https://codecanyon.net/item/whatsapp-webhooks-swiftchats-module/55361925">purchasing</a> and activating it from the `Addons` section in the admin account.
+2. After activation, go to the user account, navigate to `Developer Tools`, and select `Webhook`.
+3. Click on `Add Webhook`, enter your webhook URL (must be a publicly accessible HTTPS endpoint), and choose the events you want to subscribe to.
+
+Save your settings.
+
+#### Available Events
+You can subscribe to any of the following events:
+
+##### Message Events
+- `message.received` - Triggered when a new message is received.
+- `message.sent` - Triggered when a message is sent.
+- `message.status.update` - Triggered when the status of a sent message is updated (e.g., delivered, read).
+
+##### Contact Events
+- `contact.created` - Triggered when a new contact is created.
+- `contact.updated` - Triggered when a contact is updated.
+- `contact.deleted` - Triggered when a contact is deleted.
+
+##### Group Events
+- `group.created` - Triggered when a new group is created.
+- `group.updated` - Triggered when a group is updated.
+- `group.deleted` - Triggered when a group is deleted.
+
+##### Auto-Reply Events
+- `autoreply.created` - Triggered when an auto-reply is created.
+- `autoreply.updated` - Triggered when an auto-reply is updated.
+- `autoreply.deleted` - Triggered when an auto-reply is deleted.
+
+
+#### Webhook Request Format
+
+When an event occurs, our system sends an HTTP POST request to your specified webhook URL. The request contains a JSON payload with the following structure:
+
+```
+{
+  "event": "event.name",
+  "data": {}
+}```
+
+##### Example Payload
+
+`message.received`
+
+```
+[
+  {
+    "event": "message.received",
+    "data": {
+      "value": {
+        "messaging_product": "whatsapp",
+        "metadata": {
+          "display_phone_number": "19680825846",
+          "phone_number_id": "363351553535621"
+        },
+        "contacts": [
+          {
+            "profile": {
+              "name": "John"
+            },
+            "wa_id": "+19680825846"
+          }
+        ],
+        "messages": [
+          {
+            "from": "+19680825846",
+            "id": "wamid.HBgMMjU0NzIwMDU1ODE5FQIAEhggNjI4NDQ5NjhBQUUzQTU5OTg5NEEzRkM0RjkyNzNGNzQA",
+            "timestamp": "1727857481",
+            "text": {
+              "body": "Hi"
+            },
+            "type": "text"
+          }
+        ]
+      },
+      "field": "messages"
+    }
+  }
+]
+```
+
+
+##### Troubleshooting
+
+If your webhook is not receiving events:
+
+- Ensure your endpoint is publicly accessible.
+- Verify that your server correctly handles HTTP POST requests.
+- Check your event subscriptions in the Webhook Settings.
+
+For further assistance, contact our support team.
+
+
