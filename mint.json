@@ -73,7 +73,8 @@
             "addons/google-analytics",
             "addons/google-maps",
             "addons/razorpay",
-            "addons/ai-assistant"
+            "addons/ai-assistant",
+            "addons/webhooks"
           ]
         },
         "admin/subscription-plans",
