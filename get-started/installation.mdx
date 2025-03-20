@@ -68,18 +68,26 @@ QUEUE_DRIVER=database
 First, install Supervisor on your VPS. The installation command depends on your operating system:
 
 For Ubuntu/Debian:
-`sudo apt update && sudo apt install supervisor -y`
+```
+sudo apt update && sudo apt install supervisor -y
+```
 
 For CentOS/Rocky Linux:
-`sudo yum install supervisor -y`
+```
+sudo yum install supervisor -y
+```
 
 After installation, start Supervisor and enable it to run on boot:
-`sudo systemctl enable --now supervisor`
+```
+sudo systemctl enable --now supervisor
+```
 
 #### Step 2: Create a Supervisor Configuration File for Laravel Queues
-Create a new configuration file inside /etc/supervisor/conf.d/ (for Ubuntu) or /etc/supervisord.d/ (for CentOS).
+Create a new configuration file inside `/etc/supervisor/conf.d/` (for Ubuntu) or `/etc/supervisord.d/` (for CentOS).
 
-`sudo nano /etc/supervisor/conf.d/laravel-queue.conf`
+```
+sudo nano /etc/supervisor/conf.d/laravel-queue.conf
+```
 
 Add the following content:
 
