@@ -57,10 +57,10 @@ Generally there are 3 ways for running cron jobs:
 
 If you decide to use laravel queues go to your .env file and change the following:
 
-`QUEUE_CONNECTION=database
+```QUEUE_CONNECTION=database
 QUEUE_MEMORY=128
 QUEUE_TIMEOUT=300
-QUEUE_DRIVER=database`
+QUEUE_DRIVER=database```
 
 #### Step 1: Install Supervisor
 First, install Supervisor on your VPS. The installation command depends on your operating system:
@@ -81,13 +81,13 @@ Create a new configuration file inside /etc/supervisor/conf.d/ (for Ubuntu) or /
 
 Add the following content:
 
-`[program:laravel-queue] 
+```[program:laravel-queue] 
 process_name=%(program_name)s_%(process_num)02d 
 command=php /path-to-your-project/artisan queue:work --queue=campaign-messages,campaign-logs --tries=3 --timeout=3600 autostart=true 
 autorestart=true 
 numprocs=1 
 redirect_stderr=true 
-stdout_logfile=/var/log/laravel-queue.log`
+stdout_logfile=/var/log/laravel-queue.log```
 
 Replace `/path-to-your-project/` with your actual Laravel project path.
 
