@@ -60,7 +60,8 @@ If you decide to use laravel queues go to your .env file and change the followin
 ```QUEUE_CONNECTION=database
 QUEUE_MEMORY=128
 QUEUE_TIMEOUT=300
-QUEUE_DRIVER=database```
+QUEUE_DRIVER=database
+```
 
 #### Step 1: Install Supervisor
 First, install Supervisor on your VPS. The installation command depends on your operating system:
@@ -87,7 +88,8 @@ command=php /path-to-your-project/artisan queue:work --queue=campaign-messages,c
 autorestart=true 
 numprocs=1 
 redirect_stderr=true 
-stdout_logfile=/var/log/laravel-queue.log```
+stdout_logfile=/var/log/laravel-queue.log
+```
 
 Replace `/path-to-your-project/` with your actual Laravel project path.
 
