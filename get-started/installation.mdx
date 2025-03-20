@@ -153,14 +153,21 @@ sudo systemctl enable supervisor
 4. Under the `Add New Cron Job` section, you'll see fields to specify the timing and command for the cron job.
 5. Set Timing: We suggest to run the cron job every 3-5 minutes.
 6. In the command field, enter the appropriate command to fetch the URL. For example:<br/>
-`wget -O /dev/null https://yoururl.com/campaign-send`<br/>
-`curl -sS https://yoururl.com/campaign-send >/dev/null 2>&1`
+```
+wget -O /dev/null https://yoururl.com/campaign-send
+```
+OR
+```
+curl -sS https://yoururl.com/campaign-send >/dev/null 2>&1
+```
 7. Save Cron Job
 
 #### Linux/VPS
 1. Open your crontab for editing. You can do this by running the following command in your terminal: `crontab -e`
 2. Add the following line to your crontab to execute the URL every 3 minutes: <br/>
-    `*/3 * * * * /usr/bin/curl -sS "https://yoururl.com/campaign-send"`
+    ```
+    */3 * * * * /usr/bin/curl -sS "https://yoururl.com/campaign-send"
+    ```
 
     <Info>
     Here's a breakdown of the cron schedule:<br/>
@@ -182,6 +189,8 @@ sudo systemctl enable supervisor
 If you are facing issues with the installer, you can try the steps below
 
 - Grant access to your .env file by running the following code in the terminal. <br/>
-`chown -R www-data:www-data .env`
+```
+chown -R www-data:www-data .env
+```
 - Go to storage folder and delete installed file
 - Retry installing the script again
