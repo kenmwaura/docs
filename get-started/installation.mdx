@@ -51,9 +51,9 @@ Generally there are 3 ways for running cron jobs:
 
 ### 1. Supervisor (Highly Recommended) 
 
-<Info>
+<Warning>
     Supervisor can only be setup in a VPS and not shared hosting. If using shared hosting go to the cron jobs section below.
-</Info>
+</Warning>
 
 If you decide to use laravel queues go to your .env file and change the following:
 
@@ -108,11 +108,7 @@ After creating the configuration file, run the following commands to update and 
 
 ```
 sudo supervisorctl reread
-```
-```
 sudo supervisorctl update
-```
-```
 sudo supervisorctl start laravel-queue
 ```
 
