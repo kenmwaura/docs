@@ -57,7 +57,8 @@ Generally there are 3 ways for running cron jobs:
 
 If you decide to use laravel queues go to your .env file and change the following:
 
-```QUEUE_CONNECTION=database
+```
+QUEUE_CONNECTION=database
 QUEUE_MEMORY=128
 QUEUE_TIMEOUT=300
 QUEUE_DRIVER=database
@@ -82,7 +83,8 @@ Create a new configuration file inside /etc/supervisor/conf.d/ (for Ubuntu) or /
 
 Add the following content:
 
-```[program:laravel-queue] 
+```
+[program:laravel-queue] 
 process_name=%(program_name)s_%(process_num)02d 
 command=php /path-to-your-project/artisan queue:work --queue=campaign-messages,campaign-logs --tries=3 --timeout=3600 autostart=true 
 autorestart=true 
@@ -96,29 +98,43 @@ Replace `/path-to-your-project/` with your actual Laravel project path.
 #### Step 3: Apply Supervisor Changes
 After creating the configuration file, run the following commands to update and start Supervisor:
 
-`sudo supervisorctl reread`
-`sudo supervisorctl update`
-`sudo supervisorctl start laravel-queue`
+```
+sudo supervisorctl reread
+```
+```
+sudo supervisorctl update
+```
+```
+sudo supervisorctl start laravel-queue
+```
 
 To check if Supervisor is running correctly, use:
 
-`sudo supervisorctl status`
+```
+sudo supervisorctl status
+```
 
 #### Step 4: Monitoring and Logs
 
 You can check the logs if anything goes wrong:
 
-`tail -f /var/log/laravel-queue.log`
+```
+tail -f /var/log/laravel-queue.log
+```
 
 If the queue worker stops unexpectedly, restart Supervisor:
 
-`sudo supervisorctl restart laravel-queue`
+```
+sudo supervisorctl restart laravel-queue
+```
 
 #### Step 5: Ensure Supervisor Starts on Boot
 
 To prevent queue workers from stopping after a reboot, enable Supervisor:
 
-`sudo systemctl enable supervisor`
+```
+sudo systemctl enable supervisor
+```
 
 
 ### 2. Cron Jobs 
