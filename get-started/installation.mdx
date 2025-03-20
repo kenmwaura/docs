@@ -40,11 +40,78 @@ After purchasing Swiftchats, you will get a zipped folder. After unzipping the f
 ## Installer setup
 Once you have configured the steps above, go to your domain or subdomain which should redirect you to the installation page. Go through each installation step and grant folder permissions where necessary.
 
-## Cron jobs setup
-To ensure WhatsApp campaigns are successfully delivered, it's vital to establish a cron job that runs at intervals to dispatch these campaigns.
-There are several ways to run the cron job. For the purposes of this documentation, we'll highlight adding a cron job in cpanel, linux/VPS server and cronjob.org
+## Laravel jobs and queues
+To ensure successful delivery of WhatsApp campaigns, it's essential to set up a cron job or queue system that runs at scheduled intervals to dispatch campaigns efficiently. 
+There are multiple ways to configure this, and in this documentation, we’ll outline the recommended approaches.
 
-### Cpanel
+Generally there are 3 ways for running cron jobs:
+1. Supervisor for queue management - Best suited for VPS or dedicated hosting (Highly recommended)
+2. Server cron jobs - Preferred for shared hosting environments.
+3. cronjob.org - An alternative for shared hosting when direct server cron jobs are unavailable.
+
+### 1. Supervisor (Highly Recommended) 
+
+If you decide to use laravel queues go to your .env file and change `QUEUE_CONNECTION` and `QUEUE_DRIVER` to database.
+
+#### Step 1: Install Supervisor
+First, install Supervisor on your VPS. The installation command depends on your operating system:
+
+For Ubuntu/Debian:
+`sudo apt update && sudo apt install supervisor -y`
+
+For CentOS/Rocky Linux:
+`sudo yum install supervisor -y`
+
+After installation, start Supervisor and enable it to run on boot:
+`sudo systemctl enable --now supervisor`
+
+#### Step 2: Create a Supervisor Configuration File for Laravel Queues
+Create a new configuration file inside /etc/supervisor/conf.d/ (for Ubuntu) or /etc/supervisord.d/ (for CentOS).
+
+`sudo nano /etc/supervisor/conf.d/laravel-queue.conf`
+
+Add the following content:
+
+`[program:laravel-queue] 
+process_name=%(program_name)s_%(process_num)02d 
+command=php /path-to-your-project/artisan queue:work --queue=campaign-messages,campaign-logs --tries=3 --timeout=3600 autostart=true 
+autorestart=true 
+numprocs=1 
+redirect_stderr=true 
+stdout_logfile=/var/log/laravel-queue.log`
+
+Replace `/path-to-your-project/` with your actual Laravel project path.
+
+#### Step 3: Apply Supervisor Changes
+After creating the configuration file, run the following commands to update and start Supervisor:
+
+`sudo supervisorctl reread`
+`sudo supervisorctl update`
+`sudo supervisorctl start laravel-queue`
+
+To check if Supervisor is running correctly, use:
+
+`sudo supervisorctl status`
+
+#### Step 4: Monitoring and Logs
+
+You can check the logs if anything goes wrong:
+
+`tail -f /var/log/laravel-queue.log`
+
+If the queue worker stops unexpectedly, restart Supervisor:
+
+`sudo supervisorctl restart laravel-queue`
+
+#### Step 5: Ensure Supervisor Starts on Boot
+
+To prevent queue workers from stopping after a reboot, enable Supervisor:
+
+`sudo systemctl enable supervisor`
+
+
+### 2. Cron Jobs 
+#### Cpanel
 1. Access your cPanel account using your credentials.
 2. Look for the `Cron Jobs` or `Cron Tasks` icon within the cPanel dashboard. It's usually found under the `Advanced` or `Metrics` section.
 3. Click on the `Cron Jobs` icon to proceed.
@@ -55,7 +122,7 @@ There are several ways to run the cron job. For the purposes of this documentati
 `curl -sS https://yoururl.com/campaign-send >/dev/null 2>&1`
 7. Save Cron Job
 
-### Linux/VPS
+#### Linux/VPS
 1. Open your crontab for editing. You can do this by running the following command in your terminal: `crontab -e`
 2. Add the following line to your crontab to execute the URL every 3 minutes: <br/>
     `*/3 * * * * /usr/bin/curl -sS "https://yoururl.com/campaign-send"`
@@ -74,6 +141,7 @@ There are several ways to run the cron job. For the purposes of this documentati
 2. Click on create cronjob on the dashboard
 3. Enter the URL of the cron job i.e. https://yoururl.com/campaign-send and set execution schedule between 3 - 5 minutes.
 4. Click create to save the cronjob
+
 
 ## Trouble-shooting your installation
 If you are facing issues with the installer, you can try the steps below
