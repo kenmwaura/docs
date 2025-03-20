@@ -51,7 +51,16 @@ Generally there are 3 ways for running cron jobs:
 
 ### 1. Supervisor (Highly Recommended) 
 
-If you decide to use laravel queues go to your .env file and change `QUEUE_CONNECTION` and `QUEUE_DRIVER` to database.
+<Info>
+    Supervisor can only be setup in a VPS and not shared hosting. If using shared hosting go to the cron jobs section below.
+</Info>
+
+If you decide to use laravel queues go to your .env file and change the following:
+
+`QUEUE_CONNECTION=database
+QUEUE_MEMORY=128
+QUEUE_TIMEOUT=300
+QUEUE_DRIVER=database`
 
 #### Step 1: Install Supervisor
 First, install Supervisor on your VPS. The installation command depends on your operating system:
