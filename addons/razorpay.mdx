@@ -6,9 +6,18 @@ description: ""
 
 ### How to Setup
 
-#### Step 1: Setup API Keys 
-- Setup API Keys - Add your respective keys from the Razorpay dashboard (<a href="https://razorpay.com/docs/payments/dashboard/account-settings/api-keys/">See Guide</a>)
+#### Step 1: Setup API Key 
+- Setup API Key - Get the API key from the Razorpay dashboard (<a href="https://razorpay.com/docs/payments/dashboard/account-settings/api-keys/">See Guide</a>)
 
-#### Step 2: Setup Webhooks 
+#### Step 2: Setup Webhook & Webhook Secret
 - Setup Webhooks - Go back to your Razorpay dashboard and set your Razorpay webhook to `/webhook/razorpay` e.g. https://swiftchats.xyz/webhook/razorpay. (<a href="https://razorpay.com/docs/webhooks/setup-edit-x/" target="_blank">See guide (Don't forget to set up webhook secret, you will need this.)</a>)
 - Subscribe to payment related events. (<a href="https://razorpay.com/docs/webhooks/setup-edit-payments/" target="_blank">See Guide</a>)
+
+Add the API Key and Webhook Secret in the relevant fields in your Swiftchats application.
+
+### FAQs
+<AccordionGroup>
+    <Accordion title="I've setup Razorpay, when payment is done it is not reflected in Swiftchats dashboard?">
+        First, make sure you have correctly set up the webhook URL as specified. Then, configure a webhook secret in Razorpay and use the same secret in your application.
+    </Accordion>
+</AccordionGroup>
