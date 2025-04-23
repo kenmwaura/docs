@@ -1,24 +1,38 @@
 ---
 title: "Contacts"
 sidebarTitle: "Contacts"
-description: ""
+description: "Manage, import, and export contacts with ease."
 ---
 
-The contacts module is designed to manage all contact-related operations efficiently. It allows users to add, edit, delete, and star contacts. Additionally, it supports bulk import and export of contacts, making it easier to handle large contact lists.
+The **Contacts** module is designed to help you efficiently manage all contact-related operations. It enables users to add, edit, delete, and star contacts, along with powerful tools for bulk import and export—ideal for handling large contact lists.
+
+<Warning>
+**Note:** The number of contacts a user can add is limited based on their subscription plan.  
+For trial accounts, you can configure the contact limit by navigating to:  
+**Settings > Subscription Settings** & under Trial Period Limits change the Contacts Limit
+</Warning>
 
 ## Bulk Import
-Easily import multiple contacts at once using CSV or Excel files. This feature maps file columns to contact fields, simplifying the import process.
+Quickly import multiple contacts at once using a CSV or Excel file. During the import process, you’ll be able to map your file's columns to the appropriate contact fields, ensuring accurate data entry.
 
-### Mapping to columns
-- First name `Required`
-- Last name
-- Phone `Required` `Start with country code`
-- Email
-- Group name
+### Required Column Mapping
+- **First name** *(Required)*
+- **Last name**
+- **Phone** *(Required)* — Must start with the country code  
+- **Email**
+- **Group name**
 
 <Info>
-    If the group name does not exist then it will be added automatically.
+If a group name does not already exist, it will be created automatically.  
+To assign a contact to multiple groups, separate the group names in the same cell using a pipe symbol (`|`).  
+**Example:** `Group 1 | Group 2`
 </Info>
 
+### Import Rules & Validation
+
+- Contacts that are **duplicates** of existing contacts **will not be added**. This includes duplicates found **within the uploaded file**.  
+- Contacts with **incorrectly formatted phone numbers** (e.g., missing country code) **will be skipped** during import.
+
 ## Bulk Export
-Export contacts in bulk to Excel files for backup, reporting, or use in other systems.
+Export your entire contact list or selected contacts to an Excel file for backup, reporting, or integration with other systems.
+
