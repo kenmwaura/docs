@@ -95,7 +95,7 @@ Add the following content:
 ```
 [program:laravel-queue] 
 process_name=%(program_name)s_%(process_num)02d 
-command=php /path-to-your-project/artisan queue:work --queue=campaign-messages,campaign-logs --tries=3 --timeout=3600 autostart=true 
+command=php /path-to-your-project/artisan queue:work --tries=3 --timeout=3600 autostart=true 
 autorestart=true 
 numprocs=1 
 redirect_stderr=true 
