@@ -95,7 +95,7 @@ Add the following content:
 ```
 [program:laravel-queue] 
 process_name=%(program_name)s_%(process_num)02d 
-command=php /path-to-your-project/artisan queue:work --tries=3 --timeout=3600 autostart=true 
+command=php /path-to-your-project/artisan queue:work --queue=default,campaign-logs,campaign-messages --tries=3 --timeout=3600
 autorestart=true 
 numprocs=1 
 redirect_stderr=true 
@@ -110,7 +110,7 @@ After creating the configuration file, run the following commands to update and 
 ```
 sudo supervisorctl reread
 sudo supervisorctl update
-sudo supervisorctl start laravel-queue
+sudo supervisorctl start laravel-queue:*
 ```
 
 To check if Supervisor is running correctly, use:
@@ -141,6 +141,19 @@ To prevent queue workers from stopping after a reboot, enable Supervisor:
 sudo systemctl enable supervisor
 ```
 
+#### Step 6: Add a cron job for laravel scheduler
+
+Edit the crontab:
+
+```
+crontab -e
+```
+
+Add this line (runs Laravel's scheduler every minute):
+
+```
+* * * * * cd /path-to-your-project && /usr/bin/php artisan schedule:run >> /dev/null 2>&1
+```
 
 ### 2. Server Cron Jobs 
 #### Cpanel
