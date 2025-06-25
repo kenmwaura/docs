@@ -74,7 +74,10 @@
             "addons/google-maps",
             "addons/razorpay",
             "addons/ai-assistant",
-            "addons/webhooks"
+            "addons/flowbuilder",
+            "addons/webhooks",
+            "addons/woocommerce",
+            "addons/pabbly-subscriptions"
           ]
         },
         "admin/subscription-plans",

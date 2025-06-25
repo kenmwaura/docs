@@ -30,3 +30,26 @@ description: ""
         Keyword(s) to stop the AI agent - (Whenever a contact uses these keywords, the AI assistant will be turned off)
     </Note>
 - Add information about your organization/business in the knowledge base by uploading `doc` or `pdf` files (The AI is programmed to only answer questions based on the contents of the knowledgebase).
+## 3. Setting Up Voice Replies
+To enable voice reply functionality in Swiftchats, you'll need to download the FFmpeg binaries and place them in the correct location—no server-wide installation is required.
+1. Create the FFmpeg Folder
+
+Inside your Swiftchats script, navigate to:
+<u>storage/ffmpeg</u>
+If this folder does not exist, create it manually.
+
+2. Download FFmpeg Binaries
+
+Visit the official FFmpeg download page:
+https://ffmpeg.org/download.html
+
+From the list of builds, download the binaries for your server’s operating system. You will need:
+
+- ffmpeg
+- ffprobe
+
+3. Place Files in Swiftchats
+
+After downloading, extract (if zipped) and copy both ffmpeg and ffprobe into the storage/ffmpeg folder you created.
+
+That’s it! Swiftchats will use these files for generating and handling voice replies—no system-level installation needed.
