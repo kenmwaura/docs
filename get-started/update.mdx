@@ -6,29 +6,206 @@ description: ""
 
 <Warning>
     ### Important Info For Updates
-    - Ensure that you are using php v8.2
-    - Ensure that you have enabled `imagick` extension in your server (If not you might experience error 500). 
-    - If you're performing a manual update by replacing files, make sure you're upgrading from the immediately preceding version. If you've skipped previous updates, you must use the automated update instead.
+    - Ensure that you are using **PHP v8.2**
+    - Ensure that you have enabled the `imagick` extension in your server (If not, you might experience error 500)
+    - If you're performing a manual update by replacing files, make sure you're upgrading from the **immediately preceding version**. If you've skipped previous updates, you must use the **automated update** instead.
 </Warning>
 
 <Info>
     ### Please perform a complete backup before updating
-    - Before starting the update, make sure that you have backed up your <u>files</u> and <u>database</u> so that you can be able to revert back to them if you face any issues.
-    - Any changes made to Swiftchats files will be overwritten during an update. It's recommended to use additional files for custom modifications.
+    - Before starting the update, make sure that you have backed up your <u>files</u> and <u>database</u> so that you can revert in case of any issues.
+    - Any changes made to system files will be overwritten during an update. It's recommended to use additional files or a separate module for custom modifications.
 </Info>
 
+---
+
 ### Manual Update Process
-1 Upload the contents of the `update` folder to your server public_html or domain root directory where Swiftchats has been installed. <br/>
-2 Go to your domain or subdomain which should redirect you to the update page. <br/>
-3 Follow the instructions to update
+
+1. Upload the contents of the `update` folder to your server’s `public_html` or domain root directory where the project has been installed.  
+2. Visit your domain or subdomain — this should redirect you to the **update page**.  
+3. Follow the on-screen instructions to complete the update.
+
+---
 
 ### Automatic Update Process
-1. Go to settings in the admin panel, in bottom right of settings menu click update. 
-2. Check for update and then apply the updates.
+
+To update your system automatically:
+
+1. Log in to the **Admin Panel**.
+2. Go to **Settings**.
+3. At the bottom-right of the settings menu, click **“Update”**.
+4. Click **“Check for Update”**. If an update is available, click **“Apply Update”**.
+5. Wait for the update process to complete.
+
+---
+
+### When Automatic Updates Fail
+
+There are several reasons why the automatic update might fail. Below are the common scenarios and how to resolve them.
+
+---
+
+### 1. Insufficient Folder Permissions
+
+**Symptoms:**
+
+- The update button does nothing.
+- The update stalls or fails silently.
+- Files are not downloaded or replaced.
+
+**Cause:**  
+Your server does not have sufficient **write permissions** for the update process to download, extract, and overwrite necessary files.
+
+**Solution:**
+
+Make sure your server has correct file ownership and permissions:
+
+```
+chmod -R 755 /path/to/your/project
+chown -R yourusername:www-data /path/to/your/project
+```
+
+> **Note:** Replace `/path/to/your/project`, `yourusername`, and `www-data` with actual values used in your server.
+
+---
+
+### 2. Server Configuration Limits
+
+**Symptoms:**
+
+- Timeout errors  
+- Incomplete updates  
+- "Blank screen" after update  
+
+**Required PHP Settings:**
+
+```
+max_execution_time = 300
+memory_limit = 256M
+upload_max_filesize = 20M
+post_max_size = 20M
+```
+
+You can adjust these values in your `.htaccess`, `php.ini`, or via your hosting panel — depending on your environment.
+
+---
+
+### 3. File Ownership Issues
+
+**Symptoms:**
+
+- Permission denied errors in logs  
+- Only some files are updated  
+- Inconsistent behavior after update  
+
+**Solution:**
+
+Make sure your project files are owned by the correct server user:
+
+```
+sudo chown -R youruser:www-data /path/to/your/project
+sudo chmod -R 755 /path/to/your/project
+```
+
+> Replace `/path/to/your/project`, `youruser`, and `www-data` with the actual values used on your server or hosting environment.
+
+---
+
+### 4. Debug Using Local Mode
+
+If the update is stuck or unresponsive for more than 3 minutes:
+
+1. Open the `.env` file in your project’s root folder.
+2. Change:
+
+```
+APP_ENV=production
+```
+
+To:
+
+```
+APP_ENV=local
+```
+
+3. Retry the update.  
+4. After the update, revert back to:
+
+```
+APP_ENV=production
+```
+
+> **Caution:** Use local mode only temporarily. Leaving it active in production can expose sensitive debugging information.
+
+---
+
+### 5. No Response or Nothing Happens
+
+Open your browser **Developer Tools (F12)** → Network tab → Retry the update. Look for:
+
+- CSRF token errors
+- Session expiration
+- Network request failures
+
+Also check Laravel logs for errors:
+
+```
+storage/logs/laravel.log
+```
+
+---
 
 ### FAQs
-If the update takes more than 3 minutes to complete, do the following:
 
-1. Open the .env file in your server public_html folder and change the APP_ENV value from production to local.
-2. Go back to your site and run the update process.
-3. Once the update is complete, revert the APP_ENV value in the .env file back to production.
+<Accordion title="The update takes more than 3 minutes to complete.">
+1. Open the `.env` file on your server (typically inside `public_html`).  
+2. Change `APP_ENV=production` to `APP_ENV=local`.  
+3. Retry the update process from the Admin Panel.  
+4. After a successful update, revert it back to `production`.
+</Accordion>
+
+<Accordion title="Can I skip multiple versions when updating manually?">
+No. Manual updates are meant to go from one version to the next sequentially.  
+If you've skipped earlier versions, use the **automatic update** instead to ensure all necessary changes are applied in order.
+</Accordion>
+
+<Accordion title="Where can I check for update errors?">
+You can find update-related errors in the Laravel log file:
+
+```
+storage/logs/laravel.log
+```
+
+Use this to identify:
+- File permission issues
+- Server exceptions
+- Validation errors
+</Accordion>
+
+<Accordion title="How can I make sure the update succeeded?">
+Once the update is complete:
+- The version number should be updated in the admin panel  
+- New features or UI changes (if applicable) should be visible  
+- Check the Laravel log file to confirm no errors occurred
+</Accordion>
+
+---
+
+### Still Stuck?
+
+If the update continues to fail:
+
+Confirm that:
+- File permissions and PHP settings are correct
+- Your `.env` file is properly configured
+- You’ve cleared your application cache
+
+```
+php artisan config:clear
+php artisan cache:clear
+```
+
+Contact support with the following:
+- The contents of `storage/logs/laravel.log`
+- Your hosting type (shared, VPS, cPanel, etc.)
+- A brief description of what you’re experiencing
