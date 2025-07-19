@@ -6,6 +6,12 @@ description: ""
 
 <Warning>
     We only support `Recaptcha v3`. Be careful when adding your Google Recaptcha settings as you can be locked out of your account due to incorrect settings.
+    
+    **If you get locked out**: If you turn off reCAPTCHA and fail to put the correct settings, you may be locked out of your account. To regain access, you will need to manually configure your database settings by:
+    1. Access your database directly
+    2. Go to the `addons` table
+    3. Find the row where `name` column contains "Google Recaptcha"
+    4. Change `is_active` columns for the same row to `0`
 </Warning>
 
 ### How to set up Google reCAPTCHA
