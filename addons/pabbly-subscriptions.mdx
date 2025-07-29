@@ -16,7 +16,6 @@ The Pabbly Subscriptions module allows you to automate SaaS billing for your Swi
 
 - Sync Pabbly subscriptions with Swiftchats plans
 - Automate billing and user access management
-- Real-time synchronization of plan status
 - Restrict access based on active subscription
 
 ## Installation Instructions
@@ -29,34 +28,27 @@ To integrate Pabbly with Swiftchats:
 - Enter your **Envato Purchase Code** under the **Pabbly module**.
 - Click **Activate** to enable the module.
 
-### 2. Get Your Pabbly API Credentials
+### 2. Get Your Pabbly API Credentials & Product Name
 
-To connect Pabbly with Swiftchats, retrieve the following from your [Pabbly Dashboard](https://accounts.pabbly.com):
-
-- **API Key**
-- **Secret Key**
-- **Product Name** (the product under which your subscription plans are grouped)
-
-You’ll enter these during the configuration step.
+1. **Login to your Pabbly Subscriptions account** at [https://subscriptions.pabbly.com](https://subscriptions.pabbly.com)
+2. Go to **Settings → API Settings**
+   - Copy your **API Key** and **Secret Key** from this page.
+3. To get the **Product Name**:
+   - Simply enter a product name in the Swiftchats Pabbly Subscription Module settings.
+   - The product will be automatically created in your Pabbly dashboard with that name.
+   - Alternatively, you can copy the exact name of an existing product from your Pabbly dashboard if you prefer to use an existing one.
 
 ### 3. Configure the Module
 
-- Go to **Admin Panel > Settings > Billing Settings**.
+- Go to **Admin Panel > Addons > Pabbly Subscriptions**.
 - Select **Pabbly** as your billing provider.
 - Enter your **API Key**, **Secret Key**, and **Product Name**.
 - Save changes.
 
-### 4. Configure Subscription Plans
-
-- Go to **Admin Panel > Subscription Plans**.
-- For each plan, check the option to **Enable Pabbly Billing**.
-- ⚠️ If you have pre-existing plans, **edit and save** each one (even if unchanged) so they correctly sync with the associated Pabbly Product and Plan.
-
-### 5. Test and Verify
+### 4. Test and Verify
 
 - Create a test user and assign a subscription.
 - Confirm that the subscription status updates correctly in both Pabbly and Swiftchats.
-- Try downgrading or canceling a subscription to verify access control.
 
 ---
 
