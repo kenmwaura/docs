@@ -16,6 +16,28 @@ This page allows you to connect your whatsapp account.
 ### How to connect via Embedded Signup
 <iframe height="315" width="100%" src="https://www.youtube.com/embed/kcLkxYhX-nQ?si=E3c1RUZTdbRk4rc5"> </iframe>
 
+### How to generate permanent token
+The default whatsapp tokens expire after a few hours as they are normally used for testing. You need to create a permanent token instead if you don't want this.
+Follow these steps to create a permanent access token for your WhatsApp Business account:
+
+1. Sign into the Meta Business Suite https://www.facebook.com/business/tools/meta-business-suite.
+2. Select your business account in the top-left dropdown menu and click its Settings(gear) icon. 
+3. Navigate to `Users > System` users.
+4. Click the Add button and accept it.
+5. In the Create system user dialog box, fill in the System username section.
+6. Then select the System user role as ‘Admin’ and click the Create system user button.
+<Info>
+    This step is only necessary if an admin user has not already been created. If an admin user already exists, you can use this for token generation.
+</Info>
+7. On the same page, click the Assign Assets button.
+8. Proceed to Select asset type, click on Apps from the left, and select assets from the list of available apps.
+9. Enable the Full control toggle button for managing your app and click the Assign assets button.
+10. Click the Generate token button.
+11. Select the desired app from the dropdown (Select App) and click Next.
+12. Set the token expiration period and click Next.
+13. Scroll to Assign Permissions and select whatsapp_business_messaging and whatsapp_business_management from the list. Click the Generate Token button at the bottom.
+14. Copy the Token and paste it to the WhatsApp Token field on the Swiftchats Whatsapp Configuration page. 
+
 ### Common Issues
 <AccordionGroup>
     <Accordion title="When sending campaigns, they only appear as 'accepted' but the recipient does not receive them?">
