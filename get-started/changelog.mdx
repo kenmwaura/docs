@@ -8,38 +8,34 @@ description: ""
     Before starting the update, make sure that you have backed up your <u>files</u> and <u>database</u> so that you can be able to revert back to them if you face any issues
 </Info>
 
+### Version 2.9.5 Changelog - 28th October 2025
+- FIX: Deleting roles issue. Now when deleting roles, you can specify the role to migrate users to
+- FIX: Creating admin user issue
+
 ### Version 2.9.4 Changelog - 21st October 2025
 
-#### Enhanced
-- Optimized database for faster chat loading speeds
-- Enhanced timezone settings with dynamic time format options showing actual time in selected timezone
-- Enhanced language system with comprehensive user language management including profile language selection, automatic language persistence across all requests, streamlined menu interface, and seamless language switching for both user and admin interfaces
-
-#### Fixed
-- Fixed subscription plan deletion to properly handle active subscribers with transfer functionality
-- Fixed deleted subscription plans appearing in admin organizations view
-- Fixed logo fallback display when logo is removed from storage - now shows company name instead of broken image
+- Enhanced: Optimized database for faster chat loading speeds
+- Enhanced: Enhanced timezone settings with dynamic time format options showing actual time in selected timezone
+- Enhanced: Enhanced language system with comprehensive user language management including profile language selection, automatic language persistence across all requests, streamlined menu interface, and seamless language switching for both user and admin interfaces
+- FIX: Fixed subscription plan deletion to properly handle active subscribers with transfer functionality
+- FIX: Fixed deleted subscription plans appearing in admin organizations view
+- FIX: Fixed logo fallback display when logo is removed from storage - now shows company name instead of broken image
 
 ### Version 2.9.3 Changelog
 
-#### New
 - **NEW:** Users can now import contacts with dynamic contact fields as set in their settings section. When importing contacts, users need to download the template which will include all their configured dynamic contact fields.
-
-#### Fixed
-- Fixed WhatsApp template placeholders not being replaced with actual values when saving to database (including header text support)
-- Fixed contact field ordering not being persisted when dragging and dropping in settings
-- Fixed Arabic text handling in basic replies for proper case-insensitive matching
-- Commented out unnecessary logging in AutoReplyService for better performance
-- Fixed "Undefined property" error in ContactGroupsImport when uploading contact groups
-- Fixed URL encoding issue with placeholders (using rawurlencode for URL-specific placeholders)
-- Fixed contact import template download to include dynamic contact fields
-- Fixed export functionality to support both CSV and XLSX formats with user selection
-- Fixed Brazilian phone number validation issues with libphonenumber library by implementing custom validation for Brazilian numbers (8-14 digits support)
-- Fixed Flow Builder text entry node connector limit to allow multiple outgoing connections (increased from 2 to 100 connections)
-
-#### Enhanced
-- Enhanced frontend template message display to show header text like in WhatsApp with proper styling
-- Enhanced phone number validation system with Brazilian phone number support:
+- FIX: Fixed WhatsApp template placeholders not being replaced with actual values when saving to database (including header text support)
+- FIX: Fixed contact field ordering not being persisted when dragging and dropping in settings
+- FIX: Fixed Arabic text handling in basic replies for proper case-insensitive matching
+- FIX: Commented out unnecessary logging in AutoReplyService for better performance
+- FIX: Fixed "Undefined property" error in ContactGroupsImport when uploading contact groups
+- FIX: Fixed URL encoding issue with placeholders (using rawurlencode for URL-specific placeholders)
+- FIX: Fixed contact import template download to include dynamic contact fields
+- FIX: Fixed export functionality to support both CSV and XLSX formats with user selection
+- FIX: Fixed Brazilian phone number validation issues with libphonenumber library by implementing custom validation for Brazilian numbers (8-14 digits support)
+- FIX: Fixed Flow Builder text entry node connector limit to allow multiple outgoing connections (increased from 2 to 100 connections)
+- Enhanced: Enhanced frontend template message display to show header text like in WhatsApp with proper styling
+- Enhanced: Enhanced phone number validation system with Brazilian phone number support:
   - Added custom Brazilian phone validation (8-14 digits, flexible formatting)
   - Implemented adaptive formatting for Brazilian numbers based on length
   - Added support for legacy São Paulo mobile numbers (8-digit format)
@@ -48,8 +44,8 @@ description: ""
 - **NEW:** Users can now import contacts with dynamic contact fields as set in their settings section. When importing contacts, users need to download the template which will include all their configured dynamic contact fields.
 
 ### Version 2.9.2 Changelog
-    - **NEW:** Introduction of Actions in Flowbuilder module. Actions allow users to automate tasks such as sending messages, updating contact fields, and triggering webhooks directly within a flow, making automation more powerful and flexible.
-    - **FIX:** Resolved an issue where the Flowbuilder module was not being properly activated after installation or update, ensuring users can enable and use Flowbuilder features without manual intervention.
+- **NEW:** Introduction of Actions in Flowbuilder module. Actions allow users to automate tasks such as sending messages, updating contact fields, and triggering webhooks directly within a flow, making automation more powerful and flexible.
+- **FIX:** Resolved an issue where the Flowbuilder module was not being properly activated after installation or update, ensuring users can enable and use Flowbuilder features without manual intervention.
 
 ### Version 2.9.1 Changelog
 - **FIX:** WooCommerce installation issue
