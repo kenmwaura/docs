@@ -12,6 +12,15 @@ description: ""
 </Warning>
 
 <Info>
+    ### v2.9.5 to v2.9.6 Migration
+    **We recommend using the Manual Update Process** when migrating from v2.9.5 to v2.9.6. Otherwise, if you go with the automatic update, you will need to run the following command via SSH or terminal to update your vendor folder:
+    
+    ```bash
+    composer install --no-dev --optimize-autoloader
+    ```
+</Info>
+
+<Info>
     ### Please perform a complete backup before updating
     - Before starting the update, make sure that you have backed up your <u>files</u> and <u>database</u> so that you can revert in case of any issues.
     - Any changes made to system files will be overwritten during an update. It's recommended to use additional files or a separate module for custom modifications.
@@ -36,6 +45,10 @@ To update your system automatically:
 3. At the bottom-right of the settings menu, click **“Update”**.
 4. Click **“Check for Update”**. If an update is available, click **“Apply Update”**.
 5. Wait for the update process to complete.
+6. **For v2.9.6 and later:** After the automatic update completes, run the following command via SSH or terminal to update your vendor folder:
+   ```bash
+   composer install --no-dev --optimize-autoloader
+   ```
 
 ---
 
