@@ -1,0 +1,170 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "Swiftchats",
+  "colors": {
+    "primary": "#0D9373",
+    "light": "#07C983",
+    "dark": "#0D9373"
+  },
+  "favicon": "/images/thumbnail.png",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Get Started",
+            "pages": [
+              "introduction",
+              "get-started/prerequisites",
+              "get-started/installation",
+              "get-started/update",
+              "get-started/changelog",
+              "get-started/common-issues"
+            ]
+          },
+          {
+            "group": "Admin Panel",
+            "pages": [
+              {
+                "group": "Settings",
+                "pages": [
+                  "setup/general",
+                  "setup/timezone",
+                  "setup/broadcast",
+                  "setup/social",
+                  "setup/storage",
+                  "setup/payments",
+                  "setup/smtp",
+                  "setup/templates",
+                  "setup/frontend",
+                  "setup/subscription",
+                  "setup/billing",
+                  "setup/taxrates",
+                  "setup/coupons",
+                  "setup/languages"
+                ]
+              },
+              {
+                "group": "Addons",
+                "pages": [
+                  "addons/embedded-signup",
+                  "addons/whatsapp-qr-connect",
+                  "addons/google-recaptcha",
+                  "addons/google-analytics",
+                  "addons/google-maps",
+                  "addons/razorpay",
+                  "addons/ai-assistant",
+                  "addons/flowbuilder",
+                  "addons/webhooks",
+                  "addons/woocommerce",
+                  "addons/pabbly-subscriptions"
+                ]
+              },
+              "admin/subscription-plans",
+              "admin/faqs",
+              "admin/reviews",
+              "admin/team",
+              "admin/roles",
+              "admin/organizations",
+              "admin/users",
+              "admin/billing"
+            ]
+          },
+          {
+            "group": "Customer Panel",
+            "pages": [
+              {
+                "group": "Settings",
+                "pages": [
+                  "customer/settings/general",
+                  "customer/settings/whatsapp",
+                  "customer/settings/contact-fields",
+                  "customer/settings/ticketing"
+                ]
+              },
+              "customer/chat",
+              "customer/contacts",
+              "customer/contact-groups",
+              "customer/campaigns",
+              "customer/templates",
+              "customer/automation",
+              "customer/billing",
+              "customer/team"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "API Reference",
+        "groups": [
+          {
+            "group": "API Documentation",
+            "pages": [
+              "api-reference/introduction"
+            ]
+          },
+          {
+            "group": "Contacts",
+            "pages": [
+              "api-reference/endpoint/contacts/get",
+              "api-reference/endpoint/contacts/create",
+              "api-reference/endpoint/contacts/edit",
+              "api-reference/endpoint/contacts/delete"
+            ]
+          },
+          {
+            "group": "Contact Groups",
+            "pages": [
+              "api-reference/endpoint/contact-groups/get",
+              "api-reference/endpoint/contact-groups/create",
+              "api-reference/endpoint/contact-groups/edit",
+              "api-reference/endpoint/contact-groups/delete"
+            ]
+          },
+          {
+            "group": "Automated Replies",
+            "pages": [
+              "api-reference/endpoint/automated-replies/get",
+              "api-reference/endpoint/automated-replies/create",
+              "api-reference/endpoint/automated-replies/edit",
+              "api-reference/endpoint/automated-replies/delete"
+            ]
+          },
+          {
+            "group": "Messages",
+            "pages": [
+              "api-reference/endpoint/messages/text",
+              "api-reference/endpoint/messages/media",
+              "api-reference/endpoint/messages/template"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "logo": {
+    "light": "/images/logo.png",
+    "dark": "/images/logo.png"
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "Support",
+        "href": "mailto:support@axis96.xyz"
+      }
+    ],
+    "primary": {
+      "type": "button",
+      "label": "Support Desk",
+      "href": "https://support.axis96.com/login"
+    }
+  },
+  "redirects": [
+    {
+      "source": "/addons/evolution-api",
+      "destination": "/addons/whatsapp-qr-connect"
+    }
+  ]
+}

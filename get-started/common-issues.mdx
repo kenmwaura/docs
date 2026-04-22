@@ -4,15 +4,149 @@ sidebarTitle: "Common Issues"
 description: ""
 ---
 
+Answers to common **server and Nginx** questions when hosting Swiftchats. Expand a question to see the steps or explanation.
 
-### NGINX Server setup
-A common issue with Nginx is media files not being sent in chats or campaigns. To resolve this, remove the following line from `.conf` file
+## How to install in Nginx
 
-```
-location ~ .*\.(gif|jpg|jpeg|png|bmp|swf)$
-{
-    expires      30d;
-    error_log /dev/null;
-    access_log /dev/null;
-}
-```
+Use **Nginx** as a reverse proxy to your **Swiftchats (Laravel)** app and to **Evolution API** (bound to `127.0.0.1:8080` in Docker). Replace example domains and paths with your own.
+
+<AccordionGroup>
+  <Accordion title="How do I install Nginx on Ubuntu?">
+    ```bash
+    sudo apt update
+    sudo apt install -y nginx
+    sudo systemctl enable --now nginx
+    ```
+  </Accordion>
+
+  <Accordion title="How do I configure Nginx for Swiftchats (Laravel)?">
+    Point the **document root** at Laravel’s `public` directory and pass PHP to PHP-FPM.
+
+    Create a server block (example: `/etc/nginx/sites-available/swiftchats`):
+
+    ```nginx
+    server {
+        listen 80;
+        server_name yourdomain.com www.yourdomain.com;
+        root /var/www/swiftchats/public;
+
+        add_header X-Frame-Options "SAMEORIGIN";
+        add_header X-Content-Type-Options "nosniff";
+
+        index index.php;
+        charset utf-8;
+
+        location / {
+            try_files $uri $uri/ /index.php?$query_string;
+        }
+
+        location = /favicon.ico { access_log off; log_not_found off; }
+        location = /robots.txt  { access_log off; log_not_found off; }
+
+        error_page 404 /index.php;
+
+        location ~ \.php$ {
+            fastcgi_pass unix:/run/php/php8.2-fpm.sock;
+            fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+            include fastcgi_params;
+            fastcgi_hide_header X-Powered-By;
+        }
+
+        location ~ /\.(?!well-known).* {
+            deny all;
+        }
+    }
+    ```
+
+    Enable the site, validate the configuration, and reload Nginx:
+
+    ```bash
+    sudo ln -sf /etc/nginx/sites-available/swiftchats /etc/nginx/sites-enabled/
+    sudo nginx -t
+    sudo systemctl reload nginx
+    ```
+
+    Replace `yourdomain.com`, `/var/www/swiftchats/public`, and the `php8.2-fpm` socket path with your actual values (your PHP version may differ).
+  </Accordion>
+
+  <Accordion title="How do I set up a reverse proxy for the Evolution API?">
+    Expose Evolution API on its own hostname (or subdomain). The URL must match **`SERVER_URL`** in Evolution’s `.env` (for example `https://evolution.yourdomain.com` after TLS).
+
+    Create a server block (example: `/etc/nginx/sites-available/evolution-api`):
+
+    ```nginx
+    server {
+        listen 80;
+        server_name evolution.yourdomain.com;
+
+        location / {
+            proxy_pass http://127.0.0.1:8080;
+            proxy_http_version 1.1;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection "upgrade";
+            proxy_read_timeout 3600s;
+            proxy_send_timeout 3600s;
+        }
+    }
+    ```
+
+    Enable, test, and reload:
+
+    ```bash
+    sudo ln -sf /etc/nginx/sites-available/evolution-api /etc/nginx/sites-enabled/
+    sudo nginx -t
+    sudo systemctl reload nginx
+    ```
+
+    In Swiftchats, set **`EVOLUTION_BASE_URL`** to the same public base URL you use for Evolution.
+  </Accordion>
+
+  <Accordion title="How do I enable HTTPS with Certbot?">
+    ```bash
+    sudo apt install -y certbot python3-certbot-nginx
+    sudo certbot --nginx -d yourdomain.com -d www.yourdomain.com
+    sudo certbot --nginx -d evolution.yourdomain.com
+    ```
+
+    Certbot installs certificates and updates your Nginx server blocks. Ensure **`SERVER_URL`** and **`EVOLUTION_BASE_URL`** use `https://` after certificates are in place.
+  </Accordion>
+</AccordionGroup>
+
+## Media, chats, and API issues
+
+<AccordionGroup>
+  <Accordion title="Why are media files not sent in chats or campaigns?">
+    A common issue with Nginx is media files not being sent in chats or campaigns. To resolve this, remove the following block from your site `.conf` file:
+
+    ```nginx
+    location ~ .*\.(gif|jpg|jpeg|png|bmp|swf)$
+    {
+        expires      30d;
+        error_log /dev/null;
+        access_log /dev/null;
+    }
+    ```
+
+    Then run `sudo nginx -t` and `sudo systemctl reload nginx`.
+  </Accordion>
+
+  <Accordion title="Why do I get HTTP 403 on PUT, DELETE, or API requests?">
+    If browser or app requests that use **`PUT`**, **`DELETE`**, `PATCH`, or other REST-style methods return **403 Forbidden** (often on JSON or `/api/...` routes), the request may be blocked **before** it reaches the Swiftchats (Laravel) application.
+
+    Common causes on **shared hosting and control panels** (for example **cPanel**, **CWP (CentOS Web Panel)**, Plesk, and similar) include:
+
+    - **ModSecurity (ModSec)** and other **WAF** rules that treat non-`GET`/`POST` traffic, large JSON bodies, or certain URL patterns as suspicious and respond with 403.
+    - **Host-level security** (e.g. Imunify360, custom firewall rules) that applies the same kind of filtering at the edge.
+    - **Stricter than necessary** `Limit` / `LimitExcept` (Apache) or equivalent method allowlists, though this is less common on typical Laravel deployments than ModSec/WAF defaults.
+
+    **What to do:** Open a ticket with your host and ask them to **allow the HTTP methods your app needs** for your domain (or to **disable or tune ModSecurity** for your app’s paths). If they cannot relax those rules, deploy on a **VPS or dedicated server** where you run **Nginx** (or Apache) and PHP yourself, as in the [How to install in Nginx](#how-to-install-in-nginx) section above, so API traffic is not subject to default shared-hosting WAF rules.
+
+    <Warning>
+      403s on `PUT`/`DELETE` are usually **infrastructure or panel security**, not a bug in Swiftchats. Check server or ModSecurity **error logs** (often `error_log` or ModSec audit logs) to confirm the block happens at the web server or WAF layer.
+    </Warning>
+  </Accordion>
+</AccordionGroup>

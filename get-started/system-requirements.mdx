@@ -1,0 +1,56 @@
+---
+title: "System requirements"
+sidebarTitle: "System requirements"
+description: ""
+---
+
+<Warning>
+  We previously allowed installation on cPanel. For the best experience, we recommend following the system requirements on this page instead.
+</Warning>
+
+To ensure the **Swiftchats** platform runs efficiently with high availability for real-time messaging, the following hardware and software requirements must be met.
+
+### 1. Hardware requirements (minimum)
+
+- **Processor (CPU):** 2 cores (recommended for handling multiple WhatsApp instances).
+- **Memory (RAM):** 4 GB (essential for running Docker containers, PostgreSQL, and Next.js build processes).
+- **Storage (SSD):** 20 GB available space (to store logs, databases, and media files like audio and video).
+- **Network:** Static IP address.
+
+### 2. Software requirements
+
+- **Operating system:** Ubuntu 20.04 LTS or 22.04 LTS (recommended for stability and native Docker support).
+- **PHP:** 8.2+ (Laravel application).
+- **Runtime environment:** Node.js v20.x (LTS).
+- **Package manager:** `pnpm` (used for fast and disk-efficient dependency management).
+- **Web server:** Nginx (acts as a reverse proxy and serves static media files efficiently). For setup help, see [How to install in Nginx](/get-started/common-issues#how-to-install-in-nginx).
+- **Virtualization:** Docker and Docker Compose (required for isolating the WhatsApp QR gateway — Evolution API — and database services).
+- **Database:** MySQL (PHP 8 supported).
+
+### 3. Platform requirements
+
+- **Pusher** — for realtime messaging.
+- **Payment gateways** — verified providers such as Stripe, PayPal, Flutterwave, or Razorpay.
+
+### 4. WhatsApp Cloud API requirements
+
+<Warning>
+  If you are not using Embedded Signup, your customers are the ones who will have to setup their own Cloud API (Business verification is not a must).
+</Warning>
+
+If you intend to use Embedded signup, you need the following in order to be verified as a tech provider:
+
+> Meta business verification <br />
+> Meta access verification (You need to be able showcase your business use case)
+> Permanent access token (You can use temporary token for testing purposes)
+
+You will have to guide your customers on how to make payments to Meta:
+
+> To do this, instruct them to go to the Business Settings panel in the Meta Business Suite, select their WABA, and click the Settings tab. There they can add a payment method.  <br />
+> Business Settings URL: https://business.facebook.com/settings/whatsapp-business-accounts/ <br/>
+> Permanent access token (You can use temporary token for testing purposes)
+
+<Note>
+    Whenever you are ready to go to production, here's a guide on how to setup a permanent token
+    https://www.youtube.com/watch?v=mlZoSItN938&t=43s
+</Note>

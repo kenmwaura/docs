@@ -5,7 +5,7 @@ description: ""
 ---
 
 <Info>
-    Before beginning the installation make sure that your system requirements as indicated have been met.
+    Before beginning the installation, make sure your environment meets [System requirements](/get-started/system-requirements).
 </Info>
 
 <Warning>
@@ -15,193 +15,395 @@ description: ""
     - Ensure that you are running either `MYSQL > 5.7.7` or `MariaDB > 10.2.2` (Alternatively, you may enable the innodb_large_prefix option for your database)
 </Warning>
 
+## 1. Obtain the package
+
 After purchasing Swiftchats, you will get a zipped folder. After unzipping the folder, you will get three folders, the source code folder, update folder and the documentation folder.
 
 > Documentation <br />
 > Source-code <br />
 > Update
 
-## Database setup
+## 2. Database setup (MySQL)
+
 1. Create a new MySQL database.
 2. Create a new MySQL username and password.
 3. Assign full privileges to your database username.
 
 <Tip>
-    cPanel - <a href="https://docs.cpanel.net/cpanel/databases/mysql-database-wizard/" target="_blank">MySQL database wizard</a><br />
-    Plesk - <a href="https://docs.plesk.com/en-US/obsidian/customer-guide/website-databases.69535/" target="_blank">Website databases</a>
+    On a **VPS**, create the database with the MySQL or MariaDB client (`mysql` / `mariadb`), or run the equivalent SQL from an admin tool. Grant the application user full privileges on that database and allow connections from the host where PHP runs (often `localhost`).
 </Tip>
 
-## Uploading code
+## 3. Uploading code
+
 <Info>
     Before starting to upload the files, please make sure your file explorer has the option to view hidden files turned on. On some operating systems, the dotfiles are hidden by default.
 </Info>
-- Upload the source-code folder to your server public_html or domain root directory where Swiftchats will be installed.
-- Create a new MySQL database and DB user from your server and assign that user to the database
 
-## Installer setup
+<Tip>
+    **Ubuntu and similar VPS or dedicated servers:** The most reliable approach is to push your project to a **private GitHub repository** (or another Git host), then **clone** or **pull** the code on the server with Git. That gives you version history, simpler updates, and avoids incomplete SFTP uploads or missing application files. Create environment files such as **`.env`** directly on the server (never commit secrets to Git).
+</Tip>
+
+- **Git (recommended on Linux servers):** Create a private repository, add the Swiftchats source code (including dotfiles your workflow requires), deploy keys or SSH access on the server, then `git clone` into your web root or project directory (for example `/var/www/your-site`).
+- **Manual upload (alternative):** Copy the source-code folder to your project directory on the server (for example under `/var/www/`) using **SFTP** or **rsync**. Ensure hidden files are included.
+- Ensure you have already created the MySQL database and DB user on the server and assigned that user to the database (see section 2).
+
+## 4. Installer setup
+
 Once you have configured the steps above, go to your domain or subdomain which should redirect you to the installation page. Go through each installation step and grant folder permissions where necessary.
 
-## Laravel jobs and queues
-To ensure successful delivery of WhatsApp campaigns, it's essential to set up a cron job or queue system that runs at scheduled intervals to dispatch campaigns efficiently. 
-There are multiple ways to configure this, and in this documentation, we’ll outline the recommended approaches.
+## 5. Evolution API on Ubuntu (Docker)
 
-Generally there are 3 ways for running cron jobs:
-1. Supervisor for queue management - Best suited for VPS or dedicated hosting (Highly recommended)
-2. Server cron jobs - Preferred for shared hosting environments.
-3. cronjob.org - An alternative for shared hosting when direct server cron jobs are unavailable.
-
-### 1. Supervisor (Highly Recommended) 
+The **WhatsApp QR connect** add-on uses [Evolution API](https://github.com/EvolutionAPI/evolution-api) as the WhatsApp Web gateway. On Ubuntu, the recommended approach is to run Evolution API with Docker and Docker Compose alongside your Swiftchats stack.
 
 <Warning>
-    Supervisor can only be setup in a VPS and not shared hosting. If using shared hosting go to the cron jobs section below.
+    **WhatsApp QR connect add-on required.** The Swiftchats WhatsApp QR connect integration (settings, connectivity, and related features) is only available if you have **purchased the WhatsApp QR connect add-on** for your Swiftchats license. Complete the add-on purchase before relying on this stack in production.
 </Warning>
 
-If you decide to use laravel queues go to your .env file and change the following:
+<Steps>
+  <Step title="Install Docker Engine and Compose" titleSize="p">
+    On Ubuntu 20.04 or 22.04 LTS:
 
-```
+    ```bash
+    sudo apt update
+    sudo apt install -y ca-certificates curl gnupg
+    sudo install -m 0755 -d /etc/apt/keyrings
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+    sudo chmod a+r /etc/apt/keyrings/docker.gpg
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+    sudo apt update
+    sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+    sudo usermod -aG docker "$USER"
+    ```
+
+    Log out and back in (or open a new SSH session) so the `docker` group applies. Verify:
+
+    ```bash
+    docker --version
+    docker compose version
+    ```
+  </Step>
+
+  <Step title="Create the Evolution API project directory" titleSize="p">
+    Create the project under **`/opt/evolution-api`** (default path used by Evolution API):
+
+    ```bash
+    sudo mkdir -p /opt/evolution-api
+    sudo chown "$USER":"$USER" /opt/evolution-api
+    cd /opt/evolution-api
+    ```
+
+    The next steps assume your shell is inside **`/opt/evolution-api`**.
+  </Step>
+
+  <Step title="Configure environment variables" titleSize="p">
+    Create or edit **`.env`** in **`/opt/evolution-api`**:
+
+    ```bash
+    nano .env
+    ```
+
+    Paste these variables into your `.env` file:
+
+    ```dotenv
+    DATABASE_ENABLED=true
+    DATABASE_PROVIDER=postgresql
+    DATABASE_CONNECTION_URI=postgresql://postgres:postgres@postgres:5432/evolution?schema=public
+    DATABASE_CONNECTION_CLIENT_NAME=evolution_exchange
+
+    AUTHENTICATION_API_KEY=your-authentication-api-key
+    WA_BUSINESS_TOKEN_WEBHOOK=your-whatsapp-business-token-webhook
+
+    DATABASE_SAVE_DATA_INSTANCE=true
+    DATABASE_SAVE_DATA_NEW_MESSAGE=true
+    DATABASE_SAVE_MESSAGE_UPDATE=true
+    DATABASE_SAVE_DATA_CONTACTS=true
+    DATABASE_SAVE_DATA_CHATS=true
+    DATABASE_SAVE_DATA_LABELS=true
+    DATABASE_SAVE_DATA_HISTORIC=true
+    CONFIG_SESSION_PHONE_VERSION=2.3000.1029992881
+
+    CACHE_REDIS_ENABLED=true
+    DATABASE_PROVIDER=postgresql
+    CACHE_REDIS_URI=redis://redis:6379/6
+    CACHE_REDIS_PREFIX_KEY=evolution
+    CACHE_REDIS_SAVE_INSTANCES=false
+    CACHE_LOCAL_ENABLED=false
+    ```
+
+    Replace **`your-authentication-api-key`** and **`your-whatsapp-business-token-webhook`** with real secrets (for example strong random values from [generate-random.org API keys](https://generate-random.org/api-keys)).
+
+    <Note>
+      Save **`AUTHENTICATION_API_KEY`** somewhere secure after you set it. Later, set **`EVOLUTION_API_KEY`** in the Swiftchats **`.env`** to the **same value** (see **Connect Swiftchats to the WhatsApp gateway** at the end of this section).
+    </Note>
+  </Step>
+
+  <Step title="Create YAML file for Docker" titleSize="p">
+    In **`/opt/evolution-api`** (same directory as **`.env`**), create **`docker-compose.yaml`**:
+
+    ```bash
+    nano docker-compose.yaml
+    ```
+
+    Paste this into the file:
+
+    ```yaml
+    services:
+
+      postgres:
+        container_name: evolution_postgres
+        image: postgres:15
+        restart: always
+        networks:
+          - evolution-net
+        command: ["postgres", "-c", "max_connections=1000"]
+        ports:
+          - "127.0.0.1:5432:5432"
+        environment:
+          - POSTGRES_PASSWORD=postgres
+          - POSTGRES_USER=postgres
+          - POSTGRES_DB=evolution
+        volumes:
+          - postgres_data:/var/lib/postgresql/data
+
+      redis:
+        image: redis:latest
+        container_name: evolution_redis
+        restart: always
+        networks:
+          - evolution-net
+        command: redis-server --port 6379 --appendonly yes
+        ports:
+          - "127.0.0.1:6379:6379"
+        volumes:
+          - evolution_redis:/data
+
+      evolution-api:
+        container_name: evolution_api
+        image: evoapicloud/evolution-api:latest
+        restart: always
+        depends_on:
+          - redis
+          - postgres
+        ports:
+          - "127.0.0.1:8080:8080"
+        volumes:
+          - evolution_instances:/evolution/instances
+        networks:
+          - evolution-net
+        env_file:
+          - .env
+
+    volumes:
+      postgres_data:
+      evolution_redis:
+      evolution_instances:
+
+    networks:
+      evolution-net:
+        driver: bridge
+    ```
+
+    Save and exit the editor.
+  </Step>
+
+  <Step title="Start the services" titleSize="p">
+    From **`/opt/evolution-api`**, launch Evolution API with Docker Compose:
+
+    ```bash
+    docker compose up -d
+    ```
+
+    This starts:
+
+    - **Evolution API** (port **8080**)
+    - **PostgreSQL** (port **5432** on localhost)
+    - **Redis** (port **6379** on localhost)
+
+    Verify the services are running:
+
+    ```bash
+    docker compose ps
+    ```
+  </Step>
+
+  <Step title="Reverse proxy (Nginx)" titleSize="p">
+    Create a reverse proxy to expose the API safely.
+
+    ```bash
+    sudo nano /etc/nginx/sites-available/evolution
+    ```
+
+    Paste this:
+
+    ```nginx
+    server {
+        server_name evolution.yourdomain.com; #Replace with your subdomain
+        client_max_body_size 10M;
+        location / {
+            proxy_pass http://127.0.0.1:8080;
+            proxy_http_version 1.1;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection 'upgrade';
+            proxy_set_header Host $host;
+            proxy_cache_bypass $http_upgrade;
+
+            # Headers for API & Webhooks
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+        }
+    }
+    ```
+
+    Enable the site and reload Nginx:
+
+    ```bash
+    sudo ln -s /etc/nginx/sites-available/evolution /etc/nginx/sites-enabled/
+    sudo nginx -t
+    sudo systemctl restart nginx
+    sudo certbot --nginx -d evolution.yourdomain.com
+    ```
+
+    Replace **`evolution.yourdomain.com`** with the same hostname you set in Nginx **`server_name`**. For more options or troubleshooting, see [How to install in Nginx](/get-started/common-issues#how-to-install-in-nginx).
+  </Step>
+
+  <Step title="Connect Swiftchats to the WhatsApp gateway" titleSize="p">
+    In the Swiftchats **`.env`** file on the server, set:
+
+    - **`EVOLUTION_BASE_URL`** — Same base URL as **`SERVER_URL`** in the Evolution API gateway (for example `https://evolution.yourdomain.com`).
+    - **`EVOLUTION_API_KEY`** — Must match **`AUTHENTICATION_API_KEY`** from the gateway’s **`.env`** (use the value you saved when configuring Evolution API).
+
+    Clear config cache after editing:
+
+    ```bash
+    php artisan config:clear
+    ```
+
+    <Note>
+        For the latest Evolution API options, environment variables, and troubleshooting, see the [Evolution API installation documentation](https://mintlify.wiki/EvolutionAPI/evolution-api/installation).
+    </Note>
+  </Step>
+</Steps>
+
+## 6. Laravel jobs and queues
+
+To ensure successful delivery of WhatsApp campaigns, it's essential to set up a queue system that runs at scheduled intervals to dispatch campaigns efficiently. On a VPS, use **Supervisor** to run Laravel queue workers and a **cron** entry for Laravel's scheduler (see step 6 below).
+
+<Warning>
+    Supervisor requires shell access (SSH) and permission to install system packages (for example `sudo` on Ubuntu).
+</Warning>
+
+If you decide to use Laravel queues, go to your `.env` file and change the following:
+
+```dotenv
 QUEUE_CONNECTION=database
 QUEUE_MEMORY=128
 QUEUE_TIMEOUT=300
 QUEUE_DRIVER=database
 ```
 
-#### Step 1: Install Supervisor
-First, install Supervisor on your VPS. The installation command depends on your operating system:
+<Steps>
+  <Step title="Install Supervisor" titleSize="p">
+    On Ubuntu or Debian:
 
-For Ubuntu/Debian:
-```
-sudo apt update && sudo apt install supervisor -y
-```
-
-For CentOS/Rocky Linux:
-```
-sudo yum install supervisor -y
-```
-
-After installation, start Supervisor and enable it to run on boot:
-```
-sudo systemctl enable --now supervisor
-```
-
-#### Step 2: Create a Supervisor Configuration File for Laravel Queues
-Create a new configuration file inside `/etc/supervisor/conf.d/` (for Ubuntu) or `/etc/supervisord.d/` (for CentOS).
-
-```
-sudo nano /etc/supervisor/conf.d/laravel-queue.conf
-```
-
-Add the following content:
-
-```
-[program:laravel-queue] 
-process_name=%(program_name)s_%(process_num)02d 
-command=php /path-to-your-project/artisan queue:work --queue=default,campaign-logs,campaign-messages --tries=3 --timeout=3600
-autorestart=true 
-numprocs=1 
-redirect_stderr=true 
-stdout_logfile=/var/log/laravel-queue.log
-```
-
-Replace `/path-to-your-project/` with your actual Laravel project path.
-
-#### Step 3: Apply Supervisor Changes
-After creating the configuration file, run the following commands to update and start Supervisor:
-
-```
-sudo supervisorctl reread
-sudo supervisorctl update
-sudo supervisorctl start laravel-queue:*
-```
-
-To check if Supervisor is running correctly, use:
-
-```
-sudo supervisorctl status
-```
-
-#### Step 4: Monitoring and Logs
-
-You can check the logs if anything goes wrong:
-
-```
-tail -f /var/log/laravel-queue.log
-```
-
-If the queue worker stops unexpectedly, restart Supervisor:
-
-```
-sudo supervisorctl restart laravel-queue
-```
-
-#### Step 5: Ensure Supervisor Starts on Boot
-
-To prevent queue workers from stopping after a reboot, enable Supervisor:
-
-```
-sudo systemctl enable supervisor
-```
-
-#### Step 6: Add a cron job for laravel scheduler
-
-Edit the crontab:
-
-```
-crontab -e
-```
-
-Add this line (runs Laravel's scheduler every minute):
-
-```
-* * * * * cd /path-to-your-project && /usr/bin/php artisan schedule:run >> /dev/null 2>&1
-```
-Replace `/path-to-your-project/` with your actual Laravel project path.
-
-### 2. Server Cron Jobs 
-#### Cpanel
-1. Access your cPanel account using your credentials.
-2. Look for the `Cron Jobs` or `Cron Tasks` icon within the cPanel dashboard. It's usually found under the `Advanced` or `Metrics` section.
-3. Click on the `Cron Jobs` icon to proceed.
-4. Under the `Add New Cron Job` section, you'll see fields to specify the timing and command for the cron job.
-5. Set Timing: We suggest to run the cron job every minute.
-6. In the command field, enter the appropriate command to fetch the URL. For example:<br/>
-```
-wget -O /dev/null https://yoururl.com/campaign-send
-```
-OR
-```
-curl -sS https://yoururl.com/campaign-send >/dev/null 2>&1
-```
-7. Save Cron Job
-
-#### Linux/VPS
-1. Open your crontab for editing. You can do this by running the following command in your terminal: `crontab -e`
-2. Add the following line to your crontab to execute the URL every 3 minutes: <br/>
-    ```
-    */3 * * * * /usr/bin/curl -sS "https://yoururl.com/campaign-send"
+    ```bash
+    sudo apt update && sudo apt install supervisor -y
     ```
 
-    <Info>
-    Here's a breakdown of the cron schedule:<br/>
-    - `*/3` means `every 3 minutes.`<br/>
-    - `*` in the other fields means "every hour," "every day," "every month," and "every day of the week."
-    </Info>
+    After installation, start Supervisor and enable it to run on boot:
 
-    
-3. Save and exit your crontab editor.
+    ```bash
+    sudo systemctl enable --now supervisor
+    ```
+  </Step>
 
-### 3. Cronjob.org
-1. Create an account on https://console.cron-job.org/
-2. Click on create cronjob on the dashboard
-3. Enter the URL of the cron job i.e. https://yoururl.com/campaign-send and set execution schedule between 3 - 5 minutes.
-4. Click create to save the cronjob
+  <Step title="Create a Supervisor configuration file for Laravel queues" titleSize="p">
+    Create a new configuration file inside `/etc/supervisor/conf.d/`:
 
+    ```bash
+    sudo nano /etc/supervisor/conf.d/laravel-queue.conf
+    ```
 
-## Trouble-shooting your installation
-If you are facing issues with the installer, you can try the steps below
+    Add the following content:
 
-- Grant access to your .env file by running the following code in the terminal. <br/>
-```
+    ```ini
+    [program:laravel-queue]
+    process_name=%(program_name)s_%(process_num)02d
+    command=php /path-to-your-project/artisan queue:work --queue=default,campaign-logs,campaign-messages --tries=3 --timeout=3600
+    autorestart=true
+    numprocs=1
+    redirect_stderr=true
+    stdout_logfile=/var/log/laravel-queue.log
+    ```
+
+    Replace `/path-to-your-project/` with your actual Laravel project path.
+  </Step>
+
+  <Step title="Apply Supervisor changes" titleSize="p">
+    After creating the configuration file, run the following commands to update and start Supervisor:
+
+    ```bash
+    sudo supervisorctl reread
+    sudo supervisorctl update
+    sudo supervisorctl start laravel-queue:*
+    ```
+
+    To check if Supervisor is running correctly, use:
+
+    ```bash
+    sudo supervisorctl status
+    ```
+  </Step>
+
+  <Step title="Monitoring and logs" titleSize="p">
+    You can check the logs if anything goes wrong:
+
+    ```bash
+    tail -f /var/log/laravel-queue.log
+    ```
+
+    If the queue worker stops unexpectedly, restart Supervisor:
+
+    ```bash
+    sudo supervisorctl restart laravel-queue
+    ```
+  </Step>
+
+  <Step title="Ensure Supervisor starts on boot" titleSize="p">
+    To prevent queue workers from stopping after a reboot, enable Supervisor:
+
+    ```bash
+    sudo systemctl enable supervisor
+    ```
+  </Step>
+
+  <Step title="Add a cron job for the Laravel scheduler" titleSize="p">
+    Edit the crontab:
+
+    ```bash
+    crontab -e
+    ```
+
+    Add this line (runs Laravel's scheduler every minute):
+
+    ```text
+    * * * * * cd /path-to-your-project && /usr/bin/php artisan schedule:run >> /dev/null 2>&1
+    ```
+
+    Replace `/path-to-your-project/` with your actual Laravel project path.
+  </Step>
+</Steps>
+
+## 7. Trouble-shooting your installation
+
+If you are facing issues with the installer, try the following:
+
+**Grant access to your `.env` file** — from your project directory, run:
+
+```bash
 chown -R www-data:www-data .env
 ```
-- Go to storage folder and delete installed file
-- Retry installing the script again
+
+**Clear the installer lock** — open the `storage` folder and delete the `installed` file.
+
+**Retry** the installation in your browser.

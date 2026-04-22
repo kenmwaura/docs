@@ -1,0 +1,29 @@
+/* Inline code in body text (avoid Shiki-colored blocks inside <pre>) */
+p code,
+li code,
+td code,
+th code,
+h1 code,
+h2 code,
+h3 code,
+h4 code,
+blockquote code {
+  color: #0f172a !important;
+  background-color: #f1f5f9 !important;
+  font-weight: 500;
+}
+
+html.dark p code,
+html.dark li code,
+html.dark td code,
+html.dark th code,
+html.dark h1 code,
+html.dark h2 code,
+html.dark h3 code,
+html.dark h4 code,
+html.dark blockquote code,
+html[class*="dark"] p code,
+html[class*="dark"] li code {
+  color: #f1f5f9 !important;
+  background-color: #1e293b !important;
+}

@@ -1,0 +1,63 @@
+---
+title: "WhatsApp QR connect add-on"
+sidebarTitle: "WhatsApp QR connect"
+description: "Install and enable the WhatsApp QR connect add-on, then connect WhatsApp Web in Swiftchats."
+---
+
+<Info>
+  The WhatsApp QR connect add-on is a separate module. Purchase it from **Envato**, then install and enable it from **Admin → Addons** using your purchase code.
+</Info>
+
+<Info>
+  Before enabling the add-on for plans, run **[Evolution API](https://github.com/EvolutionAPI/evolution-api)** on your server (Swiftchats uses it as the WhatsApp Web gateway). See [System requirements](/get-started/system-requirements) for hosting and Docker guidance.
+</Info>
+
+## Prerequisites
+
+1. Upgrade Swiftchats to **v3.0** or newer.
+2. Run **Evolution API** on your stack (see [System requirements](/get-started/system-requirements)).
+
+---
+
+## 1. Install and enable the add-on (admin)
+
+1. Sign in to the **admin** account.
+2. Open **Addons**.
+3. Find **WhatsApp QR connect**.
+4. Enter your **Envato purchase code** and click **Install**. The script downloads the add-on and runs setup in the background.
+5. When install completes, open **Setup** and **turn the add-on on** (enable the toggle).
+
+---
+
+## 2. Enable on subscription plans (admin)
+
+1. Open **Plans** (subscription plans).
+2. For each plan that should use WhatsApp QR connect, **enable** the WhatsApp QR connect add-on.
+3. Save changes.
+
+---
+
+## 3. Connect WhatsApp (user)
+
+1. Sign in to a **user** account on a plan that has the add-on enabled.
+2. Go to **Settings** → **WhatsApp** (WhatsApp settings).
+3. Click **Setup WhatsApp**.
+4. Open the **WhatsApp Web** tab (not WABA).
+5. Enter:
+   - **Instance name** — must match your Evolution API instance name.
+   - **Phone number** — country code + national number, digits only (no `+`).
+6. **Scan the QR code** with WhatsApp on your phone and finish pairing.
+7. When chatting, if multiple lines are available, **select the WhatsApp QR connect line** in the chat form dropdown before sending.
+
+---
+
+## Quick reference
+
+| Step | Where | What to do |
+|------|--------|------------|
+| Prerequisites | Server + app | Swiftchats v3.0+; Evolution API running |
+| Install | Admin → Addons | Purchase code → Install → Setup → enable |
+| Plans | Admin → Plans | Enable WhatsApp QR connect per plan |
+| Pair | User → Settings → WhatsApp | Setup WhatsApp → WhatsApp Web → instance + phone → QR |
+
+For Docker-based Evolution API on Ubuntu and environment variables used alongside Swiftchats, see **section 5** in [Installation](/get-started/installation).
