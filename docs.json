@@ -17,7 +17,7 @@
             "group": "Get Started",
             "pages": [
               "introduction",
-              "get-started/prerequisites",
+              "get-started/system-requirements",
               "get-started/installation",
               "get-started/update",
               "get-started/changelog",
@@ -165,6 +165,10 @@
     {
       "source": "/addons/evolution-api",
       "destination": "/addons/whatsapp-qr-connect"
+    },
+    {
+      "source": "/get-started/prerequisites",
+      "destination": "/get-started/system-requirements"
     }
   ]
 }
