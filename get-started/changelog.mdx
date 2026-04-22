@@ -15,6 +15,11 @@ description: "Release notes and updates for Swiftchats."
 - FEAT: Allow adding contacts without names
 - FEAT: Campaign API methods
 - FEAT: Bulk assign contacts to groups
+- FEAT: Messaging stack refactored (`WhatsappService`, `ChatService`, `AutoReplyService`, `CampaignService`, and related jobs) for multiple WhatsApp lines and Evolution-backed channels
+- FEAT: Templates scoped per connection — `instance_key` in the model and database migrations
+- FEAT: API documentation expanded (`apiguide` config) and API resources updated (e.g. campaign logs, templates)
+- FIX: Subscription plans — add-on options on plans now persist correctly when toggled
+- FIX: Webhook processing pipeline — substantial updates to `WebhookController` and `ProcessWebhookJob`
 </Update>
 
 <Update label="14th April 2026" description="v2.9.7" tags={["Swiftchats"]}>
